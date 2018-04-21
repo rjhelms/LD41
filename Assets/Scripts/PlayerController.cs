@@ -7,7 +7,6 @@ public class PlayerController : BaseActor {
     public Collider2D PunchCollider;
     public Collider2D JumpCollider;
 
-    public GameObject SailorPrefab;
     // Update is called once per frame
     protected override void Update () {
 
@@ -30,10 +29,6 @@ public class PlayerController : BaseActor {
         }
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Instantiate(SailorPrefab);
-        }
     }
 
     private void FixedUpdate()

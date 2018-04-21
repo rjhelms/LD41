@@ -297,7 +297,7 @@ Transform:
   - {fileID: 316975297}
   - {fileID: 228695515}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &531625161
 MonoBehaviour:
@@ -338,8 +338,6 @@ MonoBehaviour:
   JumpAccelFrame: 0
   PunchCollider: {fileID: 316975298}
   JumpCollider: {fileID: 228695516}
-  SailorPrefab: {fileID: 1024563196394224, guid: 39b421632e91f5b4bb5781bc3f60be6f,
-    type: 2}
 --- !u!70 &531625162
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -375,6 +373,48 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &689545269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 689545271}
+  - component: {fileID: 689545270}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &689545270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689545269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b0366c1ac413d4bbe420962a984985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SailorPrefab: {fileID: 1024563196394224, guid: 39b421632e91f5b4bb5781bc3f60be6f,
+    type: 2}
+--- !u!4 &689545271
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689545269}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 24, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1156671880
 Prefab:
   m_ObjectHideFlags: 0
@@ -412,7 +452,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4759618349523338, guid: 39b421632e91f5b4bb5781bc3f60be6f, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39b421632e91f5b4bb5781bc3f60be6f, type: 2}
