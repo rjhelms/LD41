@@ -111,6 +111,7 @@ public class Sailor : BaseActor
         Debug.Log("Ouch!");
         HitPoints--;
         ChangeAnimState(AnimState.HIT);
+        hitDirection = direction;
         hitStaggerEnd = Time.time + HitStaggerTime;
         rigidbody2D.simulated = false;
     }
