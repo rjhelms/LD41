@@ -37,6 +37,9 @@ public abstract class BaseActor : MonoBehaviour
     public float JumpCurrentSpeed = 10.0f;
     public bool JumpAccelFrame = false;
 
+    public int HitPoints = 1;
+
+
     protected SpriteRenderer spriteRenderer;
     protected new Rigidbody2D rigidbody2D;
 
