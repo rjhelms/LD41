@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Sprite IdleSprite;
     public Sprite[] WalkSprites;
     public Sprite[] PunchSprites;
+    public Sprite JumpSprite;
     public float WalkSpriteTime;
     public float PunchSpriteTime = 1.0f;
 
@@ -22,6 +23,12 @@ public class PlayerController : MonoBehaviour {
     public int UpperBound = 96;
     public int LowerBound = 8;
 
+    public bool IsJumping = false;
+    public bool JumpUp = true;
+    public float JumpSpeed = 2.0f;
+    public int JumpUpFrames = 5;
+    public int JumpCurrentFrame = 0;
+
     private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
@@ -34,10 +41,10 @@ public class PlayerController : MonoBehaviour {
         transform.localScale = new Vector3(Facing, 1, 0);
         switch (AnimState)
         {
-            case 0:
+            case 0: // idle
                 spriteRenderer.sprite = IdleSprite;
                 break;
-            case 1:
+            case 1: // walk
                 if (Time.time > AnimNextSpriteTime)
                 {
                     AnimSpriteCount++;
@@ -47,7 +54,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 spriteRenderer.sprite = WalkSprites[AnimSpriteCount];
                 break;
-            case 2:
+            case 2: // punch
                 if (Facing == 1)
                 {
                     spriteRenderer.sprite = PunchSprites[1];
@@ -55,6 +62,9 @@ public class PlayerController : MonoBehaviour {
                 {
                     spriteRenderer.sprite = PunchSprites[0];
                 }
+                break;
+            case 3: // jump
+                spriteRenderer.sprite = JumpSprite;
                 break;
         }
 	}
@@ -77,22 +87,8 @@ public class PlayerController : MonoBehaviour {
             newState = 1;
             Facing = -1;
         }
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            if (transform.position.y < UpperBound)
-            {
-                moveVector += new Vector3(0, 1, 0) * WalkSpeed;
-                newState = 1;
-            }
-        } else if (Input.GetAxis("Vertical") < 0)
-        {
-            if (transform.position.y > LowerBound)
-            {
-                moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
-                newState = 1;
-            }
-        }
 
+        // punch
         if (Input.GetButtonDown("Fire1"))
         {
             if (AnimState < 2)
@@ -101,6 +97,56 @@ public class PlayerController : MonoBehaviour {
                 DoPunch();
             }
         }
+
+        // process jump frame
+        if (IsJumping)
+        {
+            if (JumpUp)
+            {
+                JumpCurrentFrame++;
+                moveVector += new Vector3(0, JumpSpeed, 0);
+                if (JumpCurrentFrame > JumpUpFrames)
+                    JumpUp = false;
+            } else
+            {
+                JumpCurrentFrame--;
+                moveVector -= new Vector3(0, JumpSpeed, 0);
+                if (JumpCurrentFrame == 0)
+                {
+                    JumpUp = true;
+                    IsJumping = false;
+                }
+            }
+        }
+        // jump
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (AnimState < 3)
+            {
+                DoJump();
+            }
+        }
+
+        if (AnimState != 3) // can't move vert during jump
+        {
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                if (transform.position.y < UpperBound)
+                {
+                    moveVector += new Vector3(0, 1, 0) * WalkSpeed;
+                    newState = 1;
+                }
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                if (transform.position.y > LowerBound)
+                {
+                    moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
+                    newState = 1;
+                }
+            }
+        }
+
         ChangeAnimState(newState);
         transform.position += moveVector;
     }
@@ -109,6 +155,12 @@ public class PlayerController : MonoBehaviour {
     {
         // don't process any logic if this isn't actually a state change
         if (AnimState == newState)
+        {
+            return;
+        }
+
+        // don't change states during jump!
+        if (IsJumping)
         {
             return;
         }
@@ -128,7 +180,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        // walking
+        // walk
         if (newState == 1)
         {
             AnimSpriteCount = 1;
@@ -137,12 +189,21 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
+        // punch
         if (newState == 2)
         {
             AnimSpriteCount = 0;
             AnimNextSpriteTime = 0;
             PunchEndTime = Time.time + PunchSpriteTime;
             AnimState = 2;
+            return;
+        }
+
+        if (newState == 3)
+        {
+            AnimSpriteCount = 0;
+            AnimNextSpriteTime = 0;
+            AnimState = 3;
             return;
         }
     }
@@ -156,5 +217,11 @@ public class PlayerController : MonoBehaviour {
     private void DoPunch()
     {
         // logic for punching goes here
+    }
+
+    private void DoJump()
+    {
+        ChangeAnimState(3);
+        IsJumping = true;
     }
 }
