@@ -4,6 +4,8 @@ using System.Collections;
 public class Sailor : BaseActor
 {
     public Sprite HitSprite;
+    public Sprite DeadSprite;
+
     public int HitPoints = 1;
     public Transform PlayerTransform;
 
@@ -35,6 +37,19 @@ public class Sailor : BaseActor
                 if (Time.time > hitStaggerEnd)
                     EndHit();
                 break;
+            case AnimState.DEAD:
+                spriteRenderer.sprite = DeadSprite;
+                if (Time.time > deadStaggerEnd)
+                {
+                    Destroy(gameObject);
+                }
+                if (Time.time > deadFlashNext)
+                {
+                    spriteRenderer.enabled = !spriteRenderer.enabled;
+                    deadFlashNext += DeadFlashTime;
+                }
+                break;
+
         }
     }
 
@@ -98,15 +113,19 @@ public class Sailor : BaseActor
         ChangeAnimState(AnimState.HIT);
         hitStaggerEnd = Time.time + HitStaggerTime;
         rigidbody2D.simulated = false;
-        if (HitPoints == 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
     protected override void EndHit()
     {
         ChangeAnimState(AnimState.IDLE);
-        rigidbody2D.simulated = true;
+        if (HitPoints > 0)
+        {
+            rigidbody2D.simulated = true;
+        } else
+        {
+            ChangeAnimState(AnimState.DEAD);
+            deadStaggerEnd = Time.time + DeadStaggerTime;
+            deadFlashNext = Time.time + DeadFlashTime;
+        }
     }
 }
