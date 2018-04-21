@@ -6,13 +6,16 @@ public class PlayerController : MonoBehaviour {
 
     public Sprite IdleSprite;
     public Sprite[] WalkSprites;
+    public Sprite[] PunchSprites;
     public float WalkSpriteTime;
+    public float PunchSpriteTime = 1.0f;
 
     public int Facing = 1;
     public float WalkSpeed = 1.0f;
     public int AnimState = 0;
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
+    public float PunchEndTime = 0;
 
     public int LeftBound = 24;
     public int RightBound = 296;
@@ -43,6 +46,15 @@ public class PlayerController : MonoBehaviour {
                     AnimNextSpriteTime += WalkSpriteTime;
                 }
                 spriteRenderer.sprite = WalkSprites[AnimSpriteCount];
+                break;
+            case 2:
+                if (Facing == 1)
+                {
+                    spriteRenderer.sprite = PunchSprites[1];
+                } else
+                {
+                    spriteRenderer.sprite = PunchSprites[0];
+                }
                 break;
         }
 	}
@@ -81,6 +93,14 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (AnimState < 2)
+            {
+                newState = 2;
+                DoPunch();
+            }
+        }
         ChangeAnimState(newState);
         transform.position += moveVector;
     }
@@ -89,6 +109,12 @@ public class PlayerController : MonoBehaviour {
     {
         // don't process any logic if this isn't actually a state change
         if (AnimState == newState)
+        {
+            return;
+        }
+
+        // don't end punch state early for walk or idle
+        if (AnimState == 2 & newState < 2 & Time.time < PunchEndTime)
         {
             return;
         }
@@ -110,11 +136,25 @@ public class PlayerController : MonoBehaviour {
             AnimState = 1;
             return;
         }
+
+        if (newState == 2)
+        {
+            AnimSpriteCount = 0;
+            AnimNextSpriteTime = 0;
+            PunchEndTime = Time.time + PunchSpriteTime;
+            AnimState = 2;
+            return;
+        }
     }
 
     private void CheckRightBound()
     {
         // process logic for when a player is trying to walk off the right screen bound
 
+    }
+    
+    private void DoPunch()
+    {
+        // logic for punching goes here
     }
 }
