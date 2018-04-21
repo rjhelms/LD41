@@ -49,38 +49,39 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        int newState = 0;
         Vector3 moveVector = new Vector3(0, 0, 0);
         if (Input.GetAxis("Horizontal") > 0)
         {
             if (transform.position.x < RightBound)
                 moveVector += new Vector3(1, 0, 0) * WalkSpeed;
+            newState = 1;
             Facing = 1;
         } else if (Input.GetAxis("Horizontal") < 0)
         {
             if (transform.position.x > LeftBound)
                 moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
             else CheckRightBound();
+            newState = 1;
             Facing = -1;
         }
         if (Input.GetAxis("Vertical") > 0)
         {
             if (transform.position.y < UpperBound)
+            {
                 moveVector += new Vector3(0, 1, 0) * WalkSpeed;
+                newState = 1;
+            }
         } else if (Input.GetAxis("Vertical") < 0)
         {
             if (transform.position.y > LowerBound)
+            {
                 moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
+                newState = 1;
+            }
         }
 
-        // gotta be a better way to check for idle state
-        if (moveVector.magnitude < 1)
-        {
-            ChangeAnimState(0);
-        } else
-        {
-            ChangeAnimState(1);
-        }
-
+        ChangeAnimState(newState);
         transform.position += moveVector;
     }
 
