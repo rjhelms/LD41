@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 49f033d8231795a4c86a8dac98fdc28e, type: 3}
   - {fileID: 21300004, guid: 49f033d8231795a4c86a8dac98fdc28e, type: 3}
   - {fileID: 21300006, guid: 49f033d8231795a4c86a8dac98fdc28e, type: 3}
-  WalkSpriteTime: 0.18
+  WalkSpriteTime: 0.15
   Facing: 1
   WalkSpeed: 1
   AnimState: 0
