@@ -17,3 +17,8 @@ enemies:
 powerups:
 	rum
 	
+
+player actions:
+	walk - drawn, in movement controller
+	jump - drawn, in movement controller 
+	attack - drawn, in movement controller
