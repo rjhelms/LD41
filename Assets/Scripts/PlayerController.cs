@@ -37,6 +37,26 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.localScale = new Vector3(Facing, 1, 0);
+        
+
+        // punch
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (AnimState < 2)
+            {
+                DoPunch();
+            }
+        }
+
+        // jump
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (AnimState < 3)
+            {
+                DoJump();
+            }
+        }
+
         switch (AnimState)
         {
             case 0: // idle
@@ -86,15 +106,6 @@ public class PlayerController : MonoBehaviour {
             Facing = -1;
         }
 
-        // punch
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (AnimState < 2)
-            {
-                newState = 2;
-                DoPunch();
-            }
-        }
 
         // process jump frame
         if (IsJumping)
@@ -106,14 +117,7 @@ public class PlayerController : MonoBehaviour {
                 IsJumping = false;
             JumpAccelFrame = !JumpAccelFrame;
         }
-        // jump
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if (AnimState < 3)
-            {
-                DoJump();
-            }
-        }
+
 
         if (AnimState != 3) // can't move vert during jump
         {
@@ -205,6 +209,7 @@ public class PlayerController : MonoBehaviour {
     private void DoPunch()
     {
         // logic for punching goes here
+        ChangeAnimState(2);
     }
 
     private void DoJump()
