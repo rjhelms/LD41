@@ -1,62 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sailor : BaseActor
+public class Sailor : BaseEnemy
 {
-    public Sprite HitSprite;
-    public Sprite DeadSprite;
-
-    public int HitPoints = 1;
-    public Transform PlayerTransform;
-
-    public float TrackChance = 0.5f;
-    public float HitStaggerTime = 0.5f;
-    public float DeadStaggerTime = 0.5f;
-    public float DeadFlashTime = 0.1f;
-
-    public float HitStaggerSpeed = 2.0f;
-
-    private int hitDirection = 1;
-    private float hitStaggerEnd = 0f;
-    private float deadStaggerEnd = 0f;
-    private float deadFlashNext = 0f;
-
-    protected override void Start()
-    {
-        base.Start();
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-        switch (State)
-        {
-            case AnimState.HIT:
-                spriteRenderer.sprite = HitSprite;
-                if (Time.time > hitStaggerEnd)
-                    EndHit();
-                break;
-            case AnimState.DEAD:
-                spriteRenderer.sprite = DeadSprite;
-                if (Time.time > deadStaggerEnd)
-                {
-                    Destroy(gameObject);
-                }
-                if (Time.time > deadFlashNext)
-                {
-                    spriteRenderer.enabled = !spriteRenderer.enabled;
-                    deadFlashNext += DeadFlashTime;
-                }
-                break;
-
-        }
-    }
 
     private void FixedUpdate()
     {
         Vector3 moveVector = Vector3.zero;
-        if (State < AnimState.HIT)
+        if (State < AnimState.HIT & HangFrame == false)
         {
             moveVector = TrackPlayer() * WalkSpeed;
             if (moveVector.magnitude != 0)
@@ -72,7 +23,7 @@ public class Sailor : BaseActor
                 }
             }
         }
-
+        
         if (State == AnimState.HIT)
         {
             Facing = -hitDirection;
@@ -80,6 +31,7 @@ public class Sailor : BaseActor
         }
 
         transform.position += moveVector;
+        HangFrame = false;
     }
 
     private Vector3 TrackPlayer()
@@ -127,6 +79,20 @@ public class Sailor : BaseActor
             ChangeAnimState(AnimState.DEAD);
             deadStaggerEnd = Time.time + DeadStaggerTime;
             deadFlashNext = Time.time + DeadFlashTime;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            bool otherHangFrame = collision.gameObject.GetComponent<BaseEnemy>().HangFrame;
+
+            if (!otherHangFrame & Random.value < HangFrameChance)
+            {
+                HangFrame = true;
+                Debug.Log("Hanging back!");
+            }
         }
     }
 }

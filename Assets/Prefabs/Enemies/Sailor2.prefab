@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50710949250066596}
   m_Layer: 0
   m_Name: Sailor2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,15 +113,17 @@ MonoBehaviour:
   JumpStartSpeed: 10
   JumpCurrentSpeed: 10
   JumpAccelFrame: 0
+  HitPoints: 2
   HitSprite: {fileID: 21300000, guid: 33693579ec3167e4a88cfc0606c156ad, type: 3}
   DeadSprite: {fileID: 21300000, guid: 10544e49abc28a34c834ce609b338dbf, type: 3}
-  HitPoints: 2
   PlayerTransform: {fileID: 0}
   TrackChance: 0.75
   HitStaggerTime: 0.25
   DeadStaggerTime: 0.5
   DeadFlashTime: 0.1
   HitStaggerSpeed: 2
+  HangFrame: 0
+  HangFrameChance: 0.8
 --- !u!212 &212182323309537408
 SpriteRenderer:
   m_ObjectHideFlags: 1
