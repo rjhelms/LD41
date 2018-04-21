@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour {
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
 
+    public int LeftBound = 24;
+    public int RightBound = 296;
+    public int UpperBound = 96;
+    public int LowerBound = 8;
+
     private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
@@ -47,19 +52,24 @@ public class PlayerController : MonoBehaviour {
         Vector3 moveVector = new Vector3(0, 0, 0);
         if (Input.GetAxis("Horizontal") > 0)
         {
-            moveVector += new Vector3(1, 0, 0) * WalkSpeed;
+            if (transform.position.x < RightBound)
+                moveVector += new Vector3(1, 0, 0) * WalkSpeed;
             Facing = 1;
         } else if (Input.GetAxis("Horizontal") < 0)
         {
-            moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
+            if (transform.position.x > LeftBound)
+                moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
+            else CheckRightBound();
             Facing = -1;
         }
         if (Input.GetAxis("Vertical") > 0)
         {
-            moveVector += new Vector3(0, 1, 0) * WalkSpeed;
+            if (transform.position.y < UpperBound)
+                moveVector += new Vector3(0, 1, 0) * WalkSpeed;
         } else if (Input.GetAxis("Vertical") < 0)
         {
-            moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
+            if (transform.position.y > LowerBound)
+                moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
         }
 
         // gotta be a better way to check for idle state
@@ -99,5 +109,11 @@ public class PlayerController : MonoBehaviour {
             AnimState = 1;
             return;
         }
+    }
+
+    private void CheckRightBound()
+    {
+        // process logic for when a player is trying to walk off the right screen bound
+
     }
 }
