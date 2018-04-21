@@ -1,0 +1,21 @@
+6-bit color:
+	00	55	AA	FF
+	0	85	170	255
+
+punk at the opera
+	character: punk rock dude
+	side-scrolling fighter
+	finds self in a production of HMS Pinafore
+	fight your way out!
+	levels are scenes of the musical? - or inspired by
+		end back stage
+
+enemies:
+	sailors - 2 or 3 ranks
+	captain
+	buttercup?
+	final boss: GILBERT and SULLIVAN
+	
+powerups:
+	rum
+	
