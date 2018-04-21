@@ -1,6 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum AnimState
+{
+    IDLE,
+    WALK,
+    ATTACK,
+    JUMP,
+    HIT,
+    DEAD,
+}
+
 public abstract class BaseActor : MonoBehaviour
 {
     public Sprite IdleSprite;
@@ -12,7 +22,7 @@ public abstract class BaseActor : MonoBehaviour
 
     public int Facing = 1;
     public float WalkSpeed = 1.0f;
-    public int AnimState = 0;
+    public AnimState State = AnimState.IDLE;
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
     public float AttackEndTime = 0;
@@ -40,12 +50,12 @@ public abstract class BaseActor : MonoBehaviour
     {
         transform.localScale = new Vector3(Facing, 1, 0);
 
-        switch (AnimState)
+        switch (State)
         {
-            case 0: // idle
+            case AnimState.IDLE: // idle
                 spriteRenderer.sprite = IdleSprite;
                 break;
-            case 1: // walk
+            case AnimState.WALK: // walk
                 if (Time.time > AnimNextSpriteTime)
                 {
                     AnimSpriteCount++;
@@ -55,7 +65,7 @@ public abstract class BaseActor : MonoBehaviour
                 }
                 spriteRenderer.sprite = WalkSprites[AnimSpriteCount];
                 break;
-            case 2: // punch
+            case AnimState.ATTACK: // punch
                 if (Facing == 1)
                 {
                     spriteRenderer.sprite = AttackSprites[1];
@@ -64,21 +74,21 @@ public abstract class BaseActor : MonoBehaviour
                     spriteRenderer.sprite = AttackSprites[0];
                 }
                 break;
-            case 3: // jump
+            case AnimState.JUMP: // jump
                 spriteRenderer.sprite = JumpSprite;
                 break;
         }
 
-        if (AnimState != 3)
+        if (State != AnimState.JUMP)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
         }
     }
 
-    protected void ChangeAnimState(int newState)
+    protected void ChangeAnimState(AnimState newState)
     {
         // don't process any logic if this isn't actually a state change
-        if (AnimState == newState)
+        if (State == newState)
         {
             return;
         }
@@ -90,46 +100,38 @@ public abstract class BaseActor : MonoBehaviour
         }
 
         // don't end punch state early for walk or idle
-        if (AnimState == 2 & newState < 2 & Time.time < AttackEndTime)
+        if (State == AnimState.ATTACK & newState < AnimState.ATTACK & Time.time < AttackEndTime)
         {
             return;
         }
 
-        // idle
-        if (newState == 0)
+        switch (newState)
         {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AnimState = 0;
-            return;
+            case AnimState.IDLE:
+                AnimSpriteCount = 0;
+                AnimNextSpriteTime = 0;
+                break;
+            case AnimState.WALK:
+                AnimSpriteCount = 1;
+                AnimNextSpriteTime = Time.time + WalkSpriteTime;
+                break;
+            case AnimState.ATTACK:
+                AnimSpriteCount = 0;
+                AnimNextSpriteTime = 0;
+                AttackEndTime = Time.time + PunchSpriteTime;
+                break;
+            case AnimState.JUMP:
+                AnimSpriteCount = 0;
+                AnimNextSpriteTime = 0;
+                break;
+            case AnimState.HIT:
+                break;
+            case AnimState.DEAD:
+                break;
         }
 
-        // walk
-        if (newState == 1)
-        {
-            AnimSpriteCount = 1;
-            AnimNextSpriteTime = Time.time + WalkSpriteTime;
-            AnimState = 1;
-            return;
-        }
+        State = newState;
 
-        // punch
-        if (newState == 2)
-        {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AttackEndTime = Time.time + PunchSpriteTime;
-            AnimState = 2;
-            return;
-        }
-
-        if (newState == 3)
-        {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AnimState = 3;
-            return;
-        }
     }
 
     public virtual void Hit()

@@ -23,7 +23,7 @@ public class Sailor : BaseActor
         Vector3 moveVector = TrackPlayer() * WalkSpeed;
         if (moveVector.magnitude != 0)
         {
-            ChangeAnimState(1);
+            ChangeAnimState(AnimState.WALK);
             if (moveVector.x < 0)
             {
                 Facing = -1;

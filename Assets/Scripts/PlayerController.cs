@@ -13,7 +13,7 @@ public class PlayerController : BaseActor {
         // punch
         if (Input.GetButtonDown("Fire1"))
         {
-            if (AnimState < 2)
+            if (State < AnimState.ATTACK)
             {
                 DoAttack();
             }
@@ -22,7 +22,7 @@ public class PlayerController : BaseActor {
         // jump
         if (Input.GetButtonDown("Fire2"))
         {
-            if (AnimState < 3)
+            if (State < AnimState.JUMP)
             {
                 DoJump();
             }
@@ -33,24 +33,23 @@ public class PlayerController : BaseActor {
 
     private void FixedUpdate()
     {
-        int newState = 0;
+        AnimState newState = AnimState.IDLE;
         Vector3 moveVector = new Vector3(0, 0, 0);
         if (Input.GetAxis("Horizontal") > 0)
         {
             if (transform.position.x < RightBound)
                 moveVector += new Vector3(1, 0, 0) * WalkSpeed;
-            newState = 1;
+            newState = AnimState.WALK;
             Facing = 1;
         } else if (Input.GetAxis("Horizontal") < 0)
         {
             if (transform.position.x > LeftBound)
                 moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
             else CheckRightBound();
-            newState = 1;
+            newState = AnimState.WALK;
             Facing = -1;
         }
-
-
+        
         // process jump frame
         if (IsJumping)
         {
@@ -70,14 +69,14 @@ public class PlayerController : BaseActor {
         }
 
 
-        if (AnimState != 3) // can't move vert during jump
+        if (State != AnimState.JUMP) // can't move vert during jump
         {
             if (Input.GetAxis("Vertical") > 0)
             {
                 if (transform.position.y < UpperBound)
                 {
                     moveVector += new Vector3(0, 1, 0) * WalkSpeed;
-                    newState = 1;
+                    newState = AnimState.WALK;
                 }
             }
             else if (Input.GetAxis("Vertical") < 0)
@@ -85,7 +84,7 @@ public class PlayerController : BaseActor {
                 if (transform.position.y > LowerBound)
                 {
                     moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
-                    newState = 1;
+                    newState = AnimState.WALK;
                 }
             }
         }
@@ -109,12 +108,12 @@ public class PlayerController : BaseActor {
     {
         // logic for punching goes here
         PunchCollider.enabled = true;
-        ChangeAnimState(2);
+        ChangeAnimState(AnimState.ATTACK);
     }
 
     private void DoJump()
     {
-        ChangeAnimState(3);
+        ChangeAnimState(AnimState.JUMP);
         JumpCurrentSpeed = JumpStartSpeed;
         JumpAccelFrame = false;
         IsJumping = true;
