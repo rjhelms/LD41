@@ -1,6 +1,4 @@
-6-bit color:
-	00	55	AA	FF
-	0	85	170	255
+DB32 palette
 
 punk at the opera
 	character: punk rock dude
