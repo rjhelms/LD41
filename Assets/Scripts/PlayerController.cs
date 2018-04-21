@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class PlayerController : BaseActor {
 
+    public float HitInvulnTime = 0.5f;
+    public float HitFlashTime = 0.1f;
+
+    public bool IsInvulnerable;
+
     public Collider2D PunchCollider;
     public Collider2D JumpCollider;
+
+    private float hitInvulnEnd;
+    private float hitNextFlash;
 
     // Update is called once per frame
     protected override void Update () {
@@ -28,7 +36,16 @@ public class PlayerController : BaseActor {
             }
         }
         base.Update();
-
+        if (IsInvulnerable)
+        {
+            if (Time.time > hitNextFlash)
+            {
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+                hitNextFlash += HitFlashTime;
+            }
+            if (Time.time > hitInvulnEnd)
+                EndHit();
+        }
     }
 
     private void FixedUpdate()
@@ -123,9 +140,27 @@ public class PlayerController : BaseActor {
     {
         if (collision.otherCollider == PunchCollider | collision.otherCollider == JumpCollider)
         {
-            // we've hit something!
-            Debug.Log(collision.gameObject);
             collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
+        } else
+        {
+            Hit(Facing);
         }
+    }
+
+    public override void Hit(int direction)
+    {
+        if (!IsInvulnerable)
+        {
+            IsInvulnerable = true;
+            HitPoints--;
+            hitInvulnEnd = Time.time + HitInvulnTime;
+            hitNextFlash = Time.time + HitFlashTime;
+        }
+    }
+
+    protected override void EndHit()
+    {
+        spriteRenderer.enabled = true;
+        IsInvulnerable = false;
     }
 }

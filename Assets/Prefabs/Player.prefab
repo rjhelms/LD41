@@ -136,8 +136,8 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 10}
-  m_EdgeRadius: 1
+  m_Offset: {x: 0, y: 8}
+  m_EdgeRadius: 2
   m_Points:
   - {x: -8, y: 0}
   - {x: 8, y: 0}
@@ -147,7 +147,7 @@ CapsuleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1103534770036308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -168,8 +168,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2, y: 32}
-  m_Size: {x: 12, y: 48}
+  m_Offset: {x: 2, y: 34}
+  m_Size: {x: 12, y: 46}
   m_Direction: 0
 --- !u!95 &95846604083500400
 Animator:
@@ -225,6 +225,10 @@ MonoBehaviour:
   JumpStartSpeed: 8
   JumpCurrentSpeed: 8
   JumpAccelFrame: 0
+  HitPoints: 1
+  HitInvulnTime: 0.75
+  HitFlashTime: 0.1
+  IsInvulnerable: 0
   PunchCollider: {fileID: 70178021040795972}
   JumpCollider: {fileID: 68675863637098662}
 --- !u!212 &212154899379454362
