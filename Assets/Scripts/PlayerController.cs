@@ -24,11 +24,9 @@ public class PlayerController : MonoBehaviour {
     public int LowerBound = 8;
 
     public bool IsJumping = false;
-    public bool JumpUp = true;
-    public float JumpSpeed = 2.0f;
-    public int JumpUpFrames = 5;
-    public int JumpCurrentFrame = 0;
-
+    public float JumpStartSpeed = 10.0f;
+    public float JumpCurrentSpeed = 10.0f;
+    public bool JumpAccelFrame = false;
     private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
@@ -101,22 +99,12 @@ public class PlayerController : MonoBehaviour {
         // process jump frame
         if (IsJumping)
         {
-            if (JumpUp)
-            {
-                JumpCurrentFrame++;
-                moveVector += new Vector3(0, JumpSpeed, 0);
-                if (JumpCurrentFrame > JumpUpFrames)
-                    JumpUp = false;
-            } else
-            {
-                JumpCurrentFrame--;
-                moveVector -= new Vector3(0, JumpSpeed, 0);
-                if (JumpCurrentFrame == 0)
-                {
-                    JumpUp = true;
-                    IsJumping = false;
-                }
-            }
+            moveVector += new Vector3(0, JumpCurrentSpeed, 0);
+            if (JumpAccelFrame)
+                JumpCurrentSpeed -= 1;
+            if (JumpCurrentSpeed < -JumpStartSpeed)
+                IsJumping = false;
+            JumpAccelFrame = !JumpAccelFrame;
         }
         // jump
         if (Input.GetButtonDown("Fire2"))
@@ -222,6 +210,8 @@ public class PlayerController : MonoBehaviour {
     private void DoJump()
     {
         ChangeAnimState(3);
+        JumpCurrentSpeed = JumpStartSpeed;
+        JumpAccelFrame = false;
         IsJumping = true;
     }
 }
