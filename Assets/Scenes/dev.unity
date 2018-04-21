@@ -454,6 +454,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114264440655863026, guid: 39b421632e91f5b4bb5781bc3f60be6f,
+        type: 2}
+      propertyPath: DeadSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 24c8b004fb755fb4e9c5fb239cc61b16,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39b421632e91f5b4bb5781bc3f60be6f, type: 2}
   m_IsPrefabParent: 0

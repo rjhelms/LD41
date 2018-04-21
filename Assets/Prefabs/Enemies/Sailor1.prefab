@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 70899315308185388}
   - component: {fileID: 50468050639683718}
   m_Layer: 0
-  m_Name: Sailor
+  m_Name: Sailor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   JumpCurrentSpeed: 10
   JumpAccelFrame: 0
   HitSprite: {fileID: 21300000, guid: 5b50800b299d1654e8e53d96405d33db, type: 3}
+  DeadSprite: {fileID: 0}
   HitPoints: 1
   PlayerTransform: {fileID: 0}
   TrackChance: 0.7
