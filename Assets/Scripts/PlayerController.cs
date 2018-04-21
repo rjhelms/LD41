@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : BaseActor {
 
+    public Collider2D PunchCollider;
+    public Collider2D JumpCollider;
+
+    public GameObject SailorPrefab;
     // Update is called once per frame
     protected override void Update () {
 
@@ -25,6 +29,11 @@ public class PlayerController : BaseActor {
             }
         }
         base.Update();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Instantiate(SailorPrefab);
+        }
     }
 
     private void FixedUpdate()
@@ -52,9 +61,16 @@ public class PlayerController : BaseActor {
         {
             moveVector += new Vector3(0, JumpCurrentSpeed, 0);
             if (JumpAccelFrame)
+            {
                 JumpCurrentSpeed -= 1;
+                if (JumpCurrentSpeed < 0)
+                    JumpCollider.enabled = true;
+            }
             if (JumpCurrentSpeed < -JumpStartSpeed)
+            {
+                JumpCollider.enabled = false;
                 IsJumping = false;
+            }
             JumpAccelFrame = !JumpAccelFrame;
         }
 
@@ -79,65 +95,13 @@ public class PlayerController : BaseActor {
             }
         }
 
+        if (Time.time > AttackEndTime)
+        {
+            PunchCollider.enabled = false;
+        }
+
         ChangeAnimState(newState);
         transform.position += moveVector;
-    }
-
-    private void ChangeAnimState(int newState)
-    {
-        // don't process any logic if this isn't actually a state change
-        if (AnimState == newState)
-        {
-            return;
-        }
-
-        // don't change states during jump!
-        if (IsJumping)
-        {
-            return;
-        }
-
-        // don't end punch state early for walk or idle
-        if (AnimState == 2 & newState < 2 & Time.time < AttackEndTime)
-        {
-            return;
-        }
-
-        // idle
-        if (newState == 0)
-        {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AnimState = 0;
-            return;
-        }
-
-        // walk
-        if (newState == 1)
-        {
-            AnimSpriteCount = 1;
-            AnimNextSpriteTime = Time.time + WalkSpriteTime;
-            AnimState = 1;
-            return;
-        }
-
-        // punch
-        if (newState == 2)
-        {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AttackEndTime = Time.time + PunchSpriteTime;
-            AnimState = 2;
-            return;
-        }
-
-        if (newState == 3)
-        {
-            AnimSpriteCount = 0;
-            AnimNextSpriteTime = 0;
-            AnimState = 3;
-            return;
-        }
     }
 
     private void CheckRightBound()
@@ -149,6 +113,7 @@ public class PlayerController : BaseActor {
     private void DoAttack()
     {
         // logic for punching goes here
+        PunchCollider.enabled = true;
         ChangeAnimState(2);
     }
 
@@ -158,5 +123,15 @@ public class PlayerController : BaseActor {
         JumpCurrentSpeed = JumpStartSpeed;
         JumpAccelFrame = false;
         IsJumping = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.otherCollider == PunchCollider | collision.otherCollider == JumpCollider)
+        {
+            // we've hit something!
+            Debug.Log(collision.gameObject);
+            collision.gameObject.GetComponent<BaseActor>().Hit();
+        }
     }
 }

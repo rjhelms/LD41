@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseActor : MonoBehaviour
+public abstract class BaseActor : MonoBehaviour
 {
     public Sprite IdleSprite;
     public Sprite[] WalkSprites;
@@ -30,7 +30,7 @@ public class BaseActor : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -68,5 +68,72 @@ public class BaseActor : MonoBehaviour
                 spriteRenderer.sprite = JumpSprite;
                 break;
         }
+
+        if (AnimState != 3)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        }
+    }
+
+    protected void ChangeAnimState(int newState)
+    {
+        // don't process any logic if this isn't actually a state change
+        if (AnimState == newState)
+        {
+            return;
+        }
+
+        // don't change states during jump!
+        if (IsJumping)
+        {
+            return;
+        }
+
+        // don't end punch state early for walk or idle
+        if (AnimState == 2 & newState < 2 & Time.time < AttackEndTime)
+        {
+            return;
+        }
+
+        // idle
+        if (newState == 0)
+        {
+            AnimSpriteCount = 0;
+            AnimNextSpriteTime = 0;
+            AnimState = 0;
+            return;
+        }
+
+        // walk
+        if (newState == 1)
+        {
+            AnimSpriteCount = 1;
+            AnimNextSpriteTime = Time.time + WalkSpriteTime;
+            AnimState = 1;
+            return;
+        }
+
+        // punch
+        if (newState == 2)
+        {
+            AnimSpriteCount = 0;
+            AnimNextSpriteTime = 0;
+            AttackEndTime = Time.time + PunchSpriteTime;
+            AnimState = 2;
+            return;
+        }
+
+        if (newState == 3)
+        {
+            AnimSpriteCount = 0;
+            AnimNextSpriteTime = 0;
+            AnimState = 3;
+            return;
+        }
+    }
+
+    public virtual void Hit()
+    {
+
     }
 }
