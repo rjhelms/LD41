@@ -230,7 +230,7 @@ MonoBehaviour:
   AnimNextSpriteTime: 0
   LeftBound: 32
   RightBound: 288
-  UpperBound: 0
+  UpperBound: 96
   LowerBound: 8
 --- !u!1 &2105772718
 GameObject:
