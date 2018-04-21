@@ -125,7 +125,7 @@ public class PlayerController : BaseActor {
         {
             // we've hit something!
             Debug.Log(collision.gameObject);
-            collision.gameObject.GetComponent<BaseActor>().Hit();
+            collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
         }
     }
 }

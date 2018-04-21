@@ -324,7 +324,7 @@ MonoBehaviour:
   PunchSpriteTime: 0.12
   Facing: 1
   WalkSpeed: 2
-  AnimState: 0
+  State: 0
   AnimSpriteCount: 0
   AnimNextSpriteTime: 0
   AttackEndTime: 0

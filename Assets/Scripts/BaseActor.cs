@@ -38,11 +38,13 @@ public abstract class BaseActor : MonoBehaviour
     public bool JumpAccelFrame = false;
 
     protected SpriteRenderer spriteRenderer;
+    protected new Rigidbody2D rigidbody2D;
 
     // Use this for initialization
     protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -124,17 +126,18 @@ public abstract class BaseActor : MonoBehaviour
                 AnimSpriteCount = 0;
                 AnimNextSpriteTime = 0;
                 break;
-            case AnimState.HIT:
-                break;
-            case AnimState.DEAD:
-                break;
         }
 
         State = newState;
 
     }
 
-    public virtual void Hit()
+    public virtual void Hit(int direction)
+    {
+
+    }
+
+    protected virtual void EndHit()
     {
 
     }
