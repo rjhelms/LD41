@@ -4,17 +4,6 @@ using System.Collections;
 public class Projectile : MonoBehaviour
 {
     public float Velocity;
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void FixedUpdate()
     {
