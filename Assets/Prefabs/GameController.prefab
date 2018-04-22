@@ -61,6 +61,7 @@ MonoBehaviour:
   TargetX: 320
   TargetY: 200
   RenderTexture: {fileID: 2100000, guid: da3012eebac2c8c4e87071d77ca333f2, type: 2}
+  HealthImage: {fileID: 0}
   ScreenWidth: 320
   CurrentPosition: 160
   TargetPosition: 24

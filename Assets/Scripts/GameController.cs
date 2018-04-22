@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 using System.Collections;
 
 public enum GameState
@@ -12,7 +12,7 @@ public enum GameState
 
 public class GameController : MonoBehaviour
 {
-    [Header("Debug tools")]
+    [Header("Spawn prefabs")]
     public GameObject[] SpawnPrefabs;
 
     [Header("Resolution and Display")]
@@ -21,6 +21,9 @@ public class GameController : MonoBehaviour
     public int TargetY = 200;
     public Material RenderTexture;
     private float pixelRatioAdjustment;
+
+    [Header("UI Elements")]
+    public Image HealthImage;
 
     [Header("Scroll properties")]
     public int ScreenWidth = 320;
@@ -93,6 +96,10 @@ public class GameController : MonoBehaviour
         {
             ScoreManager.Instance.Level++;
             SceneManager.LoadScene("main");
+        }
+        if (ScoreManager.Instance.HitPoints >= 0)
+        {
+            HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
         }
     }
 
