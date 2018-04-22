@@ -28,7 +28,13 @@ enemies:
 		- but l to r movement
 		
 	final boss: GILBERT and SULLIVAN
-	
+		- level 4
+		- each has 4 hitpoints
+			- Gilbert: paces up to bottom at back - summons random sailors
+				- no attack of his own
+			- Sullivan: 
+				- in front of Gilbert
+				- shoots music notes in bursts of three
 powerups:
 	* rum - restore health
 	* jump / speed improvements
@@ -82,6 +88,9 @@ other things:
 	title screen
 	level select - or just continue?
 	next balance pass
+		- more bombs
+		- maybe from captain and soldier3?
+		- more shoes
 	
 * Level generation:
 	* # of screens = level + 2
