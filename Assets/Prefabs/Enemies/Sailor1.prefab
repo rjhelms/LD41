@@ -30,6 +30,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1964359898096592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4774282025823236}
+  - component: {fileID: 70406236767241972}
+  m_Layer: 0
+  m_Name: SailorPunch
+  m_TagString: EnemyAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4759618349523338
 Transform:
   m_ObjectHideFlags: 1
@@ -39,8 +55,22 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 296, y: 16, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4774282025823236}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4774282025823236
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1964359898096592}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4759618349523338}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50468050639683718
@@ -63,6 +93,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &70406236767241972
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1964359898096592}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 14, y: 34}
+  m_Size: {x: 8, y: 12}
+  m_Direction: 0
 --- !u!70 &70899315308185388
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -100,7 +145,7 @@ MonoBehaviour:
   - {fileID: 21300002, guid: ed5cddcdcdda1f744a59d6fc1e6f3cdd, type: 3}
   JumpSprite: {fileID: 21300000, guid: da58fbc1c14a8d24889062e90bac791d, type: 3}
   WalkSpriteTime: 0.15
-  PunchSpriteTime: 1
+  PunchSpriteTime: 0.12
   Facing: -1
   WalkSpeed: 1
   State: 0
@@ -126,6 +171,9 @@ MonoBehaviour:
   HitStaggerSpeed: 2
   HangFrame: 0
   HangFrameChance: 0.5
+  AttackDistance: 32
+  AttackChance: 0.2
+  PunchCollider: {fileID: 70406236767241972}
 --- !u!212 &212926032924393638
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -3,12 +3,23 @@ using System.Collections;
 
 public class Sailor : BaseEnemy
 {
+    public float AttackDistance;
+    public float AttackChance;
+    
+    public Collider2D PunchCollider;
 
     private void FixedUpdate()
     {
         Vector3 moveVector = Vector3.zero;
         if (State < AnimState.HIT & HangFrame == false)
         {
+            Vector2 distance = (Vector2)transform.position - (Vector2)PlayerTransform.position;
+            if (Mathf.Abs(distance.magnitude) < AttackDistance)
+            {
+                if (Random.value < AttackChance)
+                    DoAttack();
+            }
+
             moveVector = TrackPlayer() * WalkSpeed;
             if (moveVector.magnitude != 0)
             {
@@ -94,5 +105,12 @@ public class Sailor : BaseEnemy
                 Debug.Log("Hanging back!");
             }
         }
+    }
+
+    private void DoAttack()
+    {
+        // logic for punching goes here
+        PunchCollider.enabled = true;
+        ChangeAnimState(AnimState.ATTACK);
     }
 }

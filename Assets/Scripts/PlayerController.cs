@@ -138,12 +138,16 @@ public class PlayerController : BaseActor {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.otherCollider == PunchCollider | collision.otherCollider == JumpCollider)
+        if (collision.collider.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
-        } else
-        {
-            Hit(Facing);
+            if (collision.otherCollider == PunchCollider | collision.otherCollider == JumpCollider)
+            {
+                collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
+            }
+            else
+            {
+                Hit(Facing);
+            }
         }
     }
 
