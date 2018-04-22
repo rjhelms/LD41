@@ -18,10 +18,6 @@ public class BaseEnemy : BaseActor
     [Header("Collision Avoidance")]
     public bool HangFrame = false;
     public float HangFrameChance = 0.8f;
-
-    [Header("Player tracking")]
-    public float TrackChance = 0.5f;
-    public Transform PlayerTransform;
     #endregion
 
     #region Protected variables
@@ -30,12 +26,6 @@ public class BaseEnemy : BaseActor
     protected float deadStaggerEnd = 0f;
     protected float deadFlashNext = 0f;
     #endregion
-
-    protected override void Start()
-    {
-        base.Start();
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
 
     // Update is called once per frame
     protected override void Update()
@@ -61,6 +51,45 @@ public class BaseEnemy : BaseActor
                 }
                 break;
 
+        }
+    }
+
+    public override void Hit(int direction)
+    {
+        Debug.Log("Ouch!");
+        HitPoints--;
+        ChangeAnimState(AnimState.HIT);
+        hitDirection = direction;
+        hitStaggerEnd = Time.time + HitStaggerTime;
+        rigidbody2D.simulated = false;
+    }
+
+    protected override void EndHit()
+    {
+        ChangeAnimState(AnimState.IDLE);
+        if (HitPoints > 0)
+        {
+            rigidbody2D.simulated = true;
+        }
+        else
+        {
+            ChangeAnimState(AnimState.DEAD);
+            deadStaggerEnd = Time.time + DeadStaggerTime;
+            deadFlashNext = Time.time + DeadFlashTime;
+        }
+    }
+    
+    protected virtual void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            bool otherHangFrame = collision.gameObject.GetComponent<BaseEnemy>().HangFrame;
+
+            if (!otherHangFrame & Random.value < HangFrameChance)
+            {
+                HangFrame = true;
+                Debug.Log("Hanging back!");
+            }
         }
     }
 }

@@ -4,11 +4,21 @@ using System.Collections;
 public class Sailor : BaseEnemy
 {
     #region public variables
+    [Header("Player tracking")]
+    public float TrackChance = 0.5f;
+    public Transform PlayerTransform;
+
     [Header("Attack properites")]
     public float AttackDistance;
     public float AttackChance;
     public Collider2D PunchCollider;
     #endregion
+
+    protected override void Start()
+    {
+        base.Start();
+        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void FixedUpdate()
     {
@@ -72,30 +82,6 @@ public class Sailor : BaseEnemy
             yTrack = 0;
 
         return new Vector3(xTrack, yTrack, 0);
-    }
-
-    public override void Hit(int direction)
-    {
-        Debug.Log("Ouch!");
-        HitPoints--;
-        ChangeAnimState(AnimState.HIT);
-        hitDirection = direction;
-        hitStaggerEnd = Time.time + HitStaggerTime;
-        rigidbody2D.simulated = false;
-    }
-
-    protected override void EndHit()
-    {
-        ChangeAnimState(AnimState.IDLE);
-        if (HitPoints > 0)
-        {
-            rigidbody2D.simulated = true;
-        } else
-        {
-            ChangeAnimState(AnimState.DEAD);
-            deadStaggerEnd = Time.time + DeadStaggerTime;
-            deadFlashNext = Time.time + DeadFlashTime;
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
