@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 {
     [Header("Spawn prefabs")]
     public GameObject[] SpawnPrefabs;
+    public GameObject[] BossPrefabs;
 
     [Header("Resolution and Display")]
     public Camera WorldCamera;
@@ -93,7 +94,6 @@ public class GameController : MonoBehaviour
         {
             case GameState.STARTING:
                 fadeTimeLeft -= Time.deltaTime;
-                Debug.Log(1 - (fadeTimeLeft / FadeTime));
                 CoverPanel.color = Color.Lerp(CoverPanelBlack, CoverPanelClear, (1 - (fadeTimeLeft / FadeTime)));
                 UpdateUI();
                 if (fadeTimeLeft <= 0)
@@ -108,7 +108,7 @@ public class GameController : MonoBehaviour
                 CoverPanel.color = Color.Lerp(CoverPanelClear, CoverPanelBlack, (1 - (fadeTimeLeft / FadeTime)));
                 if (fadeTimeLeft <= 0)
                 {
-                    if (ScoreManager.Instance.Level < 4)
+                    if (ScoreManager.Instance.Level < 5)
                     {
                         SceneManager.LoadScene("main");
                     }
@@ -274,6 +274,11 @@ public class GameController : MonoBehaviour
         int minY = 8;
         int maxY = 97;
         int maxBaddieIndex = ScoreManager.Instance.Level + 2;
+        if (ScoreManager.Instance.Level == 4)
+        {
+            NumScreens = 1;
+            maxBaddieIndex = 5;
+        }
         for (int curScreen = 0; curScreen < NumScreens; curScreen++)
         {
             int minX = (curScreen * 268) + 160;
@@ -300,6 +305,14 @@ public class GameController : MonoBehaviour
                 {
                     newBaddie.GetComponent<BaseEnemy>().Active = true;
                 }
+            }
+        }
+        if (ScoreManager.Instance.Level == 4)
+        {
+            NumScreens = 2;
+            foreach (GameObject Boss in BossPrefabs)
+            {
+                Instantiate(Boss, Boss.transform.position, Quaternion.identity);
             }
         }
     }

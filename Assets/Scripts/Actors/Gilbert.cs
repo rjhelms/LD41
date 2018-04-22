@@ -101,7 +101,11 @@ public class Gilbert : BaseEnemy
         int SpawnIndex = Random.Range(0, SpawnEnemies.Length);
         int SpawnY = Random.Range(SpawnYMin, SpawnYMax);
         GameObject newEnemy = Instantiate(SpawnEnemies[SpawnIndex], new Vector3(SpawnX, SpawnY, SpawnY), Quaternion.identity);
-        newEnemy.GetComponent<BaseActor>().Active = true;
+        BaseActor newActor = newEnemy.GetComponent<BaseActor>();
+        newActor.Active = true;
+        newActor.LeftBound += 272;
+        newActor.RightBound += 272;
+        
         nextSpawnTime = Time.time + SpawnTime;
     }
 }

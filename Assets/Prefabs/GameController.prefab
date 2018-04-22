@@ -57,6 +57,9 @@ MonoBehaviour:
   - {fileID: 1975975441671674, guid: 2d55226f81be4c145895908bea27eae9, type: 2}
   - {fileID: 1832401043209632, guid: 33a44a50d34d6424b88504708d3957b8, type: 2}
   - {fileID: 1790941208189882, guid: ce8c533c1ad4845469bcbe7a3478b3af, type: 2}
+  BossPrefabs:
+  - {fileID: 1752230817021828, guid: 274f591e46f50f146bb33ccea068d365, type: 2}
+  - {fileID: 1928182850544612, guid: 69c6f22373f25b04ab4cecb07afa5edb, type: 2}
   WorldCamera: {fileID: 0}
   TargetX: 320
   TargetY: 200
