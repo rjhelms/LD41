@@ -67,5 +67,6 @@ public class ProjectileEnemy : BaseEnemy
         attackStep = AttackStep.WARMUP;
         nextAttackPhaseTime = Time.time + AttackPhaseTimes[0];
         ChangeAnimState(AnimState.ATTACK);
+        // TODO: Projectile fire sound
     }
 }

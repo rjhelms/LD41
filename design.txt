@@ -61,9 +61,10 @@ balance score/powerups for enemies:
 	
 	
 other things:		
-	player health / lives / gameover
+	* player health / lives
+		* gameover implemented as pause - ie, have check for the condition
 	* balance - tweak jumping
-		- increased power, added mario style invuln when falling
+		* - increased power, added mario style invuln when falling
 	* two camera setup
 	level navigation
 	level graphics - backgrounds, foregrounds
@@ -73,21 +74,21 @@ other things:
 		- obstacles?
 		- platforms?
 			- these will both require a lot of reworking of collisions
-	level designs / loading
-		- procedurally generate instead
+	* level designs / loading 
+		* - procedurally generate instead
 	sound / music
 	title screen
 	level select
 	
-Level generation:
-	# of screens = level + 2
-	for each screen:
-		spawn baddies
-		spawn in right 2/3:
-			(ScreenNo * 296)+108 < x < (ScreenNo * 296)+296
-			8 < y < 96
-		# of baddies = level# (1 indexed) + screen# (0 indexed) + 1
-		type of baddies = level# + 2
-			ie level 1 - all 3 sailors
-			level 2 - introduce buttercup
-			level 3 - introduce captain
+* Level generation:
+	* # of screens = level + 2
+	* for each screen:
+		* spawn baddies
+		* spawn in right 2/3:
+			* (ScreenNo * 296)+108 < x < (ScreenNo * 296)+296
+			* 8 < y < 96
+		* # of baddies = level# (1 indexed) + screen# (0 indexed) + 1
+		* type of baddies = level# + 2
+			* ie level 1 - all 3 sailors
+			* level 2 - introduce buttercup
+			* level 3 - introduce captain

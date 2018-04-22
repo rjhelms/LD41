@@ -83,7 +83,7 @@ public class BaseEnemy : BaseActor
 
     public override void Hit(int direction)
     {
-        Debug.Log("Ouch!");
+        // TODO: Enemy hit sound
         HitPoints--;
         ChangeAnimState(AnimState.HIT);
         hitDirection = direction;
@@ -105,6 +105,7 @@ public class BaseEnemy : BaseActor
             ChangeAnimState(AnimState.DEAD);
             deadStaggerEnd = Time.time + DeadStaggerTime;
             deadFlashNext = Time.time + DeadFlashTime;
+            // TODO: enemy dead sound
         }
     }
     

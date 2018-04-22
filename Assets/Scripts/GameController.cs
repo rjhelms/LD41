@@ -5,9 +5,12 @@ using System.Collections;
 
 public enum GameState
 {
+    STARTING,
     RUNNING,
     SCROLLING,
     PAUSED,
+    WON,
+    LOST,
 }
 
 public class GameController : MonoBehaviour
@@ -35,6 +38,8 @@ public class GameController : MonoBehaviour
     public int TargetPosition = 0;
     public int ScrollAmount = 296;
     public int ScrollPerFrame = 2;
+    public int NumScreens;
+    public int CurScreen;
 
     public GameState State;
 
@@ -60,63 +65,87 @@ public class GameController : MonoBehaviour
         backgrounds = GameObject.FindGameObjectsWithTag("Background");
         GenerateLevel();
         LevelText.text = string.Format("LEVEL {0}", ScoreManager.Instance.Level);
+        CurScreen = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject toSpawn = null;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // TODO: remove debug code
+        switch (State)
         {
-            toSpawn = Instantiate(SpawnPrefabs[0]);
+            case GameState.STARTING:
+                // TODO: starting state
+                State = GameState.RUNNING;
+                break;
+            case GameState.WON:
+                // TODO: level ending state
+                if (ScoreManager.Instance.Level < 4)
+                {
+                    SceneManager.LoadScene("main");
+                }
+                break;
+            case GameState.LOST:
+                // TODO: game over state
+                break;
+            case GameState.SCROLLING:
+            case GameState.RUNNING:
+                GameObject toSpawn = null;
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    toSpawn = Instantiate(SpawnPrefabs[0]);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    toSpawn = Instantiate(SpawnPrefabs[1]);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    toSpawn = Instantiate(SpawnPrefabs[2]);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    toSpawn = Instantiate(SpawnPrefabs[3]);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    toSpawn = Instantiate(SpawnPrefabs[4]);
+                }
+                if (toSpawn)
+                {
+                    toSpawn.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
+                    toSpawn.GetComponent<BaseActor>().Active = true;
+                    toSpawn.GetComponent<BaseActor>().LeftBound += CurrentPosition - 160;
+                    toSpawn.GetComponent<BaseActor>().RightBound += CurrentPosition - 160;
+                }
+                if (Input.GetKeyDown(KeyCode.BackQuote))
+                {
+                    CanScroll();
+                }
+                if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                {
+                    ScoreManager.Instance.Level++;
+                    SceneManager.LoadScene("main");
+                }
+                if (ScoreManager.Instance.HitPoints >= 0)
+                {
+                    HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
+                }
+                else
+                {
+                    HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
+                }
+                if (ScoreManager.Instance.Score > ScoreManager.Instance.NextLife)
+                {
+                    ScoreManager.Instance.Lives++;
+                    ScoreManager.Instance.NextLife *= 2;
+                    // TODO: Life up sound
+                }
+                BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
+                ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
+                LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);
+                break;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            toSpawn = Instantiate(SpawnPrefabs[1]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            toSpawn = Instantiate(SpawnPrefabs[2]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            toSpawn = Instantiate(SpawnPrefabs[3]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            toSpawn = Instantiate(SpawnPrefabs[4]);
-        }
-        if (toSpawn)
-        {
-            toSpawn.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            toSpawn.GetComponent<BaseActor>().Active = true;
-            toSpawn.GetComponent<BaseActor>().LeftBound += CurrentPosition - 160;
-            toSpawn.GetComponent<BaseActor>().RightBound += CurrentPosition - 160;
-        }
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            CanScroll();
-        }
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
-        {
-            ScoreManager.Instance.Level++;
-            SceneManager.LoadScene("main");
-        }
-        if (ScoreManager.Instance.HitPoints >= 0)
-        {
-            HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
-        } else
-        {
-            HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
-        }
-        if (ScoreManager.Instance.Score > ScoreManager.Instance.NextLife)
-        {
-            ScoreManager.Instance.Lives++;
-            ScoreManager.Instance.NextLife *= 2;
-        }
-        BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
-        ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
-        LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);
     }
 
     private void FixedUpdate()
@@ -154,6 +183,14 @@ public class GameController : MonoBehaviour
     {
         if (!CanScroll())
             return false;
+
+        CurScreen++;
+
+        if (CurScreen == NumScreens)
+        {
+            WinLevel();
+            return true;
+        }
 
         // destroy all projectiles
         Projectile[] projectiles = FindObjectsOfType<Projectile>();
@@ -196,11 +233,11 @@ public class GameController : MonoBehaviour
 
     private void GenerateLevel()
     {
-        int numScreens = ScoreManager.Instance.Level + 3;
+        NumScreens = ScoreManager.Instance.Level + 3;
         int minY = 8;
         int maxY = 97;
         int maxBaddieIndex = ScoreManager.Instance.Level + 2;
-        for (int curScreen = 0; curScreen < numScreens; curScreen++)
+        for (int curScreen = 0; curScreen < NumScreens; curScreen++)
         {
             int minX = (curScreen * 268) + 160;
             int maxX = (curScreen * 268) + 296;
@@ -228,5 +265,21 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void WinLevel()
+    {
+        Debug.Log("Level won!");
+        State = GameState.WON;
+        // TODO: play level clear sound
+        ScoreManager.Instance.Level++;
+
+    }
+
+    public void LoseLevel()
+    {
+        Debug.Log("Game over!");
+        // TODO: play game over sound
+        State = GameState.LOST;
     }
 }

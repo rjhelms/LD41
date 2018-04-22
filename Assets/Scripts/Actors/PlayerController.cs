@@ -169,6 +169,7 @@ public class PlayerController : BaseActor {
         // logic for punching goes here
         PunchCollider.enabled = true;
         ChangeAnimState(AnimState.ATTACK);
+        // TODO: Player attack sound
     }
 
     private void DoJump()
@@ -177,6 +178,7 @@ public class PlayerController : BaseActor {
         JumpCurrentSpeed = JumpStartSpeed;
         JumpAccelFrame = false;
         IsJumping = true;
+        // TODO: Player jump sound
     }
 
     private void DoBomb()
@@ -197,6 +199,7 @@ public class PlayerController : BaseActor {
         }
         ScoreManager.Instance.Bombs--;
         nextBombCooldownTime = Time.time + BombCoolDownTime;
+        // TODO: Player bomb sound
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -223,6 +226,7 @@ public class PlayerController : BaseActor {
             PowerUp powerUp = collision.gameObject.GetComponent<PowerUp>();
             switch (powerUp.Type)
             {
+                // TODO: powerup sound
                 case PowerUpType.BOMB:
                     ScoreManager.Instance.Bombs++;
                     break;
@@ -250,6 +254,7 @@ public class PlayerController : BaseActor {
             {
                 Die();
             }
+            // TODO: player hit sound
             hitInvulnEnd = Time.time + HitInvulnTime;
             hitNextFlash = Time.time + HitFlashTime;
         }
@@ -270,9 +275,11 @@ public class PlayerController : BaseActor {
         if (ScoreManager.Instance.Lives >= 0)
         {
             ChangeAnimState(AnimState.DEAD);
-        } else
+            // TODO: Player dead sound
+        }
+        else
         {
-            gameController.State = GameState.PAUSED;
+            gameController.LoseLevel();
         }
     }
 }
