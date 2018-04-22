@@ -109,7 +109,11 @@ public class GameController : MonoBehaviour
         {
             HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
         }
-
+        if (ScoreManager.Instance.Score > ScoreManager.Instance.NextLife)
+        {
+            ScoreManager.Instance.Lives++;
+            ScoreManager.Instance.NextLife *= 2;
+        }
         BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
         ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
         LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);

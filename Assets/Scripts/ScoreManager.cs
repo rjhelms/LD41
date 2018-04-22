@@ -7,6 +7,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public int Score = 0;
     public int Lives = 3;
+    public int NextLife = 2500;
     public int WalkSpeed = 2;
     public int MaxWalkSpeed = 4;
     public int HitPoints = 3;
@@ -18,6 +19,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         Score = 0;
         Lives = 3;
+        NextLife = 2500;
         HitPoints = 3;
         MaxHitPoints = 3;
         WalkSpeed = 2;
