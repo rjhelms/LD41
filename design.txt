@@ -9,35 +9,38 @@ punk at the opera
 		end back stage
 
 enemies:
-	sailors - 2 or 3 ranks
+	* sailors - 2 or 3 ranks
 		- just different numbers of hitpoints, I think!
 		- behaviour:
 			- approach player
 			- punch when close
-	captain
+	* captain
 		- has a handgun
 		- shoot process: stop for a moment, then fire
 		- behaviour:
 			- pace up and down vertically, facing player
 			- except when knocked off it's target x-pos - then return to it
 			
-	buttercup
+	* buttercup
 		- slow moving, sings
 		- stops and shoots music notes
 		- ie similar to captain
+		- but l to r movement
 		
 	final boss: GILBERT and SULLIVAN
 	
 powerups:
-	rum
+	rum - restore health
+	jump / speed improvements
+	bomb / projectile?
 	
 
-player actions:
-	walk - drawn, in movement controller
-	jump - drawn, in movement controller 
-	attack - drawn, in movement controller
+* player actions:
+	* walk - drawn, in movement controller
+	* jump - drawn, in movement controller 
+	* attack - drawn, in movement controller
 
-scrolling behaviour:
+* scrolling behaviour:
 	check for active enemies - if any, prevent scrolling
 	
 	game controller keeps state and current position
@@ -47,5 +50,16 @@ scrolling behaviour:
 			update current position
 			activate enemies on screen
 		unpause
-		
-	
+
+other things:		
+	player health / lives / gameover
+	level navigation
+	level graphics - backgrounds, foregrounds
+	other items on levels
+		- obstacles?
+		- platforms?
+			- these will both require a lot of reworking of collisions
+	level designs / loading
+	sound / music
+	title screen
+	level select
