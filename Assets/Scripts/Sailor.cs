@@ -15,11 +15,14 @@ public class Sailor : BaseEnemy
         Vector3 moveVector = Vector3.zero;
         if (State < AnimState.HIT & HangFrame == false)
         {
-            Vector2 distance = (Vector2)transform.position - (Vector2)PlayerTransform.position;
-            if (Mathf.Abs(distance.magnitude) < AttackDistance)
+            if (State < AnimState.ATTACK)
             {
-                if (Random.value < AttackChance)
-                    DoAttack();
+                Vector2 distance = (Vector2)transform.position - (Vector2)PlayerTransform.position;
+                if (Mathf.Abs(distance.magnitude) < AttackDistance)
+                {
+                    if (Random.value < AttackChance)
+                        DoAttack();
+                }
             }
 
             moveVector = TrackPlayer() * WalkSpeed;
