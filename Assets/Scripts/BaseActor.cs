@@ -25,6 +25,7 @@ public abstract class BaseActor : MonoBehaviour
     public int Facing = 1;
     public AnimState State = AnimState.IDLE;
     public GameController gameController;
+    public bool Active;
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
     public float AttackEndTime = 0;
@@ -59,7 +60,7 @@ public abstract class BaseActor : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             transform.localScale = new Vector3(Facing, 1, 0);
 

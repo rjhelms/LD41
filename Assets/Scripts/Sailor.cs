@@ -22,7 +22,7 @@ public class Sailor : BaseEnemy
 
     private void FixedUpdate()
     {
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             Vector3 moveVector = Vector3.zero;
             if (State < AnimState.HIT & HangFrame == false)

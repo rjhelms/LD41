@@ -30,7 +30,7 @@ public class ProjectileEnemy : BaseEnemy
     protected override void Update()
     {
         base.Update();
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             switch (State)
             {

@@ -23,7 +23,7 @@ public class PlayerController : BaseActor {
 
     // Update is called once per frame
     protected override void Update () {
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             // punch
             if (Input.GetButtonDown("Fire1"))
@@ -58,7 +58,7 @@ public class PlayerController : BaseActor {
 
     private void FixedUpdate()
     {
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             AnimState newState = AnimState.IDLE;
             Vector3 moveVector = new Vector3(0, 0, 0);
@@ -66,6 +66,7 @@ public class PlayerController : BaseActor {
             {
                 if (transform.position.x < RightBound)
                     moveVector += new Vector3(1, 0, 0) * WalkSpeed;
+                else CheckRightBound();
                 newState = AnimState.WALK;
                 Facing = 1;
             }
@@ -73,7 +74,6 @@ public class PlayerController : BaseActor {
             {
                 if (transform.position.x > LeftBound)
                     moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
-                else CheckRightBound();
                 newState = AnimState.WALK;
                 Facing = -1;
             }
@@ -129,8 +129,11 @@ public class PlayerController : BaseActor {
 
     private void CheckRightBound()
     {
-        // process logic for when a player is trying to walk off the right screen bound
-
+        if (gameController.StartScroll())
+        {
+            LeftBound += gameController.ScrollAmount;
+            RightBound += gameController.ScrollAmount;
+        }
     }
     
     private void DoAttack()

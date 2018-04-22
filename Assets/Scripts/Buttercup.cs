@@ -7,7 +7,7 @@ public class Buttercup : ProjectileEnemy
 
     private void FixedUpdate()
     {
-        if (gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING)
         {
             Vector3 moveVector = Vector3.zero;
             if (State == AnimState.HIT)
