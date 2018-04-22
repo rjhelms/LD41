@@ -159,7 +159,7 @@ public class PlayerController : BaseActor {
             {
                 collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
             }
-            else
+            else if (!IsJumping | JumpCurrentSpeed >= 0)
             {
                 Hit(Facing);
             }
