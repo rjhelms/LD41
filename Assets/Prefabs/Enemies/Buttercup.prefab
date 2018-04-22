@@ -167,7 +167,7 @@ MonoBehaviour:
   BulletSpawnPoint: {fileID: 4871099004859820}
   BulletPrefab: {fileID: 1285094699065280, guid: 7a3ad59322eaf624f971f030b4f99c69,
     type: 2}
-  FireChance: 0.02
+  FireChance: 0.01
   attackStep: 3
   AttackPhaseTimes:
   - 0.1
