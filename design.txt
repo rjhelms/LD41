@@ -62,7 +62,8 @@ balance score/powerups for enemies:
 	
 other things:		
 	player health / lives / gameover
-	balance - tweak jumping
+	* balance - tweak jumping
+		- increased power, added mario style invuln when falling
 	* two camera setup
 	level navigation
 	level graphics - backgrounds, foregrounds

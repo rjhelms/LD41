@@ -200,8 +200,8 @@ MonoBehaviour:
   AnimNextSpriteTime: 0
   AttackEndTime: 0
   IsJumping: 0
-  JumpStartSpeed: 8
-  JumpCurrentSpeed: 8
+  JumpStartSpeed: 10
+  JumpCurrentSpeed: 10
   JumpAccelFrame: 0
   WalkSpriteTime: 0.15
   AttackSpriteTime: 0.12
