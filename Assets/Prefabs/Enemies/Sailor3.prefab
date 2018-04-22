@@ -181,6 +181,9 @@ MonoBehaviour:
   - 0.16
   TrackChance: 0.8
   PlayerTransform: {fileID: 0}
+  TrackRandomVector: {x: 0, y: 0}
+  TrackRandomness: 8
+  TrackRandomTime: 15
   AttackDistance: 32
   AttackChance: 0.4
   PunchCollider: {fileID: 70382959613599642}
