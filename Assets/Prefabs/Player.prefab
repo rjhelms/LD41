@@ -191,6 +191,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 91dce343d3a7c004d9c2f3ea05d31dcf, type: 3}
   - {fileID: 21300002, guid: 91dce343d3a7c004d9c2f3ea05d31dcf, type: 3}
   JumpSprite: {fileID: 21300000, guid: 84b9b5b6f5c1ad240af102923c3645b2, type: 3}
+  DeadSprite: {fileID: 21300000, guid: d222b7a0e0958db4891803d1d3689918, type: 3}
   HitPoints: 1
   Facing: 1
   State: 0
@@ -215,6 +216,8 @@ MonoBehaviour:
   HitInvulnTime: 0.75
   HitFlashTime: 0.1
   BombCoolDownTime: 1
+  DeadStaggerTime: 0.75
+  DeadFlashTime: 0.1
   IsInvulnerable: 0
 --- !u!212 &212154899379454362
 SpriteRenderer:

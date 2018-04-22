@@ -19,6 +19,7 @@ public abstract class BaseActor : MonoBehaviour
     public Sprite[] WalkSprites;
     public Sprite[] AttackSprites;
     public Sprite JumpSprite;
+    public Sprite DeadSprite;
 
     [Header("State")]
     public int HitPoints = 1;

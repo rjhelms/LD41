@@ -13,6 +13,8 @@ public class PlayerController : BaseActor {
     public float HitInvulnTime = 0.5f;
     public float HitFlashTime = 0.1f;
     public float BombCoolDownTime = 0.5f;
+    public float DeadStaggerTime = 0.5f;
+    public float DeadInvulnTime = 1f;
 
     public bool IsInvulnerable;
     #endregion
@@ -20,38 +22,47 @@ public class PlayerController : BaseActor {
     #region Private variables
     private float hitInvulnEnd;
     private float hitNextFlash;
+    protected float deadStaggerEnd = 0f;
+    protected float deadFlashNext = 0f;
     private float nextBombCooldownTime = 0f;
     #endregion
 
     // Update is called once per frame
     protected override void Update () {
-        if (Active & gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING) 
         {
-            // punch
-            if (Input.GetButtonDown("Fire1"))
+            if (State != AnimState.DEAD)
             {
-                if (State < AnimState.ATTACK)
+                // punch
+                if (Input.GetButtonDown("Fire1"))
                 {
-                    DoAttack();
+                    if (State < AnimState.ATTACK)
+                    {
+                        DoAttack();
+                    }
                 }
-            }
 
-            // jump
-            if (Input.GetButtonDown("Fire2"))
-            {
-                if (State < AnimState.JUMP)
+                // jump
+                if (Input.GetButtonDown("Fire2"))
                 {
-                    DoJump();
+                    if (State < AnimState.JUMP)
+                    {
+                        DoJump();
+                    }
                 }
-            }
-            if (Input.GetButtonDown("Fire3"))
-            {
-                if (ScoreManager.Instance.Bombs > 0 & Time.time > nextBombCooldownTime)
+                if (Input.GetButtonDown("Fire3"))
                 {
-                    DoBomb();
+                    if (ScoreManager.Instance.Bombs > 0 & Time.time > nextBombCooldownTime)
+                    {
+                        DoBomb();
+                    }
                 }
             }
             base.Update();
+            if (State == AnimState.DEAD)
+            {
+                spriteRenderer.sprite = DeadSprite;
+            }
             if (IsInvulnerable)
             {
                 if (Time.time > hitNextFlash)
@@ -59,8 +70,15 @@ public class PlayerController : BaseActor {
                     spriteRenderer.enabled = !spriteRenderer.enabled;
                     hitNextFlash += HitFlashTime;
                 }
-                if (Time.time > hitInvulnEnd)
+                if (State != AnimState.DEAD & Time.time > hitInvulnEnd)
+                {
                     EndHit();
+                } else if (State == AnimState.DEAD & Time.time > deadStaggerEnd)
+                {
+                    ChangeAnimState(AnimState.IDLE);
+                    ScoreManager.Instance.HitPoints = 3;
+                    hitInvulnEnd = Time.time + DeadInvulnTime;
+                }
             }
         }
     }
@@ -68,7 +86,7 @@ public class PlayerController : BaseActor {
     private void FixedUpdate()
     {
         WalkSpeed = ScoreManager.Instance.WalkSpeed;
-        if (Active & gameController.State == GameState.RUNNING)
+        if (Active & gameController.State == GameState.RUNNING & State != AnimState.DEAD)
         {
             AnimState newState = AnimState.IDLE;
             Vector3 moveVector = new Vector3(0, 0, 0);
@@ -228,6 +246,10 @@ public class PlayerController : BaseActor {
         {
             IsInvulnerable = true;
             ScoreManager.Instance.HitPoints--;
+            if (ScoreManager.Instance.HitPoints == 0)
+            {
+                Die();
+            }
             hitInvulnEnd = Time.time + HitInvulnTime;
             hitNextFlash = Time.time + HitFlashTime;
         }
@@ -237,5 +259,20 @@ public class PlayerController : BaseActor {
     {
         spriteRenderer.enabled = true;
         IsInvulnerable = false;
+    }
+
+    private void Die()
+    {
+        IsInvulnerable = true;
+        deadStaggerEnd = Time.time + DeadStaggerTime;
+        hitNextFlash = Time.time + HitFlashTime;
+        ScoreManager.Instance.Lives -= 1;
+        if (ScoreManager.Instance.Lives >= 0)
+        {
+            ChangeAnimState(AnimState.DEAD);
+        } else
+        {
+            gameController.State = GameState.PAUSED;
+        }
     }
 }

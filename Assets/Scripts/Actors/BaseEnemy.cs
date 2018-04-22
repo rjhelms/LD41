@@ -6,7 +6,7 @@ public class BaseEnemy : BaseActor
     #region Public variables
     [Header("More sprites")]
     public Sprite HitSprite;
-    public Sprite DeadSprite;
+
 
     [Header("Hit Stats")]
     public float HitStaggerTime = 0.5f;
