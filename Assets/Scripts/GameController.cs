@@ -31,6 +31,11 @@ public class GameController : MonoBehaviour
     public Text LevelText;
     public Text ScoreText;
     public Image LivesImage;
+    public Image CoverPanel;
+
+    public Color CoverPanelBlack;
+    public Color CoverPanelClear;
+    public float FadeTime;
 
     [Header("Scroll properties")]
     public int ScreenWidth = 320;
@@ -44,6 +49,8 @@ public class GameController : MonoBehaviour
     public GameState State;
 
     private GameObject[] backgrounds;
+    private float fadeTimeLeft;
+
     // Use this for initialization
     void Start()
     {
@@ -66,6 +73,8 @@ public class GameController : MonoBehaviour
         GenerateLevel();
         LevelText.text = string.Format("LEVEL {0}", ScoreManager.Instance.Level);
         CurScreen = 0;
+        fadeTimeLeft = FadeTime;
+        CoverPanel.color = CoverPanelBlack;
     }
 
     // Update is called once per frame
@@ -75,18 +84,31 @@ public class GameController : MonoBehaviour
         switch (State)
         {
             case GameState.STARTING:
-                // TODO: starting state
-                State = GameState.RUNNING;
+                fadeTimeLeft -= Time.deltaTime;
+                Debug.Log(1 - (fadeTimeLeft / FadeTime));
+                CoverPanel.color = Color.Lerp(CoverPanelBlack, CoverPanelClear, (1 - (fadeTimeLeft / FadeTime)));
+                if (fadeTimeLeft <= 0)
+                {
+                    CoverPanel.color = CoverPanelClear;
+                    Debug.Log("Starting!");
+                    State = GameState.RUNNING;
+                }
                 break;
             case GameState.WON:
-                // TODO: level ending state
-                if (ScoreManager.Instance.Level < 4)
+                fadeTimeLeft -= Time.deltaTime;
+                CoverPanel.color = Color.Lerp(CoverPanelClear, CoverPanelBlack, (1 - (fadeTimeLeft / FadeTime)));
+                if (fadeTimeLeft <= 0)
                 {
-                    SceneManager.LoadScene("main");
+                    if (ScoreManager.Instance.Level < 4)
+                    {
+                        SceneManager.LoadScene("main");
+                    }
                 }
                 break;
             case GameState.LOST:
                 // TODO: game over state
+                fadeTimeLeft -= Time.deltaTime;
+                CoverPanel.color = Color.Lerp(CoverPanelClear, CoverPanelBlack, (1 - (fadeTimeLeft / FadeTime)));
                 break;
             case GameState.SCROLLING:
             case GameState.RUNNING:
@@ -271,6 +293,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Level won!");
         State = GameState.WON;
+        fadeTimeLeft = FadeTime;
         // TODO: play level clear sound
         ScoreManager.Instance.Level++;
 
@@ -281,5 +304,6 @@ public class GameController : MonoBehaviour
         Debug.Log("Game over!");
         // TODO: play game over sound
         State = GameState.LOST;
+        fadeTimeLeft = FadeTime;
     }
 }
