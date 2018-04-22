@@ -1,10 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum AttackStep
+{
+    WARMUP,
+    FIRE,
+    COOLDOWN,
+    DONE
+}
+
 public class Captain : BaseEnemy
 {
     public float TargetXPos;
     public Transform PlayerTransform;
+
+    public float FireChance = 0.05f;
+    public AttackStep attackStep = AttackStep.DONE;
+
+    public float[] AttackPhaseTimes;
+
+    private float nextAttackPhaseTime;
     private bool MoveUp;
 
     protected override void Start()
@@ -15,6 +30,36 @@ public class Captain : BaseEnemy
         if (Random.value < 0.5f)
             MoveUp = true;
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        switch (State)
+        {
+            case AnimState.ATTACK:
+                switch (attackStep)
+                {
+                    case AttackStep.WARMUP:
+                        if (Time.time > nextAttackPhaseTime)
+                            attackStep = AttackStep.FIRE;
+                        break;
+                    case AttackStep.FIRE:
+                        Debug.Log("BANG!");
+                        // fire the projectile here!
+                        nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
+                        attackStep = AttackStep.COOLDOWN;
+                        break;
+                    case AttackStep.COOLDOWN:
+                        if (Time.time > nextAttackPhaseTime)
+                            attackStep = AttackStep.DONE;
+                        break;
+                    case AttackStep.DONE:
+                        ChangeAnimState(AnimState.IDLE);
+                        break;
+                }
+                break;
+        }
     }
 
     private void FixedUpdate()
@@ -73,13 +118,19 @@ public class Captain : BaseEnemy
             }
             ChangeAnimState(AnimState.WALK);
 
-            // random chance to fire
+            if (Random.value <= FireChance)
+            {
+                DoAttack();
+            }
         }
 
-        if (State == AnimState.ATTACK)
-        {
-            // three substates - wait, fire, load
-        }
         transform.position += moveVector;
+    }
+
+    private void DoAttack()
+    {
+        attackStep = AttackStep.WARMUP;
+        nextAttackPhaseTime = Time.time + AttackPhaseTimes[0];
+        ChangeAnimState(AnimState.ATTACK);
     }
 }
