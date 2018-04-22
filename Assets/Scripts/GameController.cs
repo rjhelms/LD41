@@ -95,6 +95,7 @@ public class GameController : MonoBehaviour
                 fadeTimeLeft -= Time.deltaTime;
                 Debug.Log(1 - (fadeTimeLeft / FadeTime));
                 CoverPanel.color = Color.Lerp(CoverPanelBlack, CoverPanelClear, (1 - (fadeTimeLeft / FadeTime)));
+                UpdateUI();
                 if (fadeTimeLeft <= 0)
                 {
                     CoverPanel.color = CoverPanelClear;
@@ -157,25 +158,30 @@ public class GameController : MonoBehaviour
                     ScoreManager.Instance.Level++;
                     SceneManager.LoadScene("main");
                 }
-                if (ScoreManager.Instance.HitPoints >= 0)
-                {
-                    HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
-                }
-                else
-                {
-                    HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
-                }
-                if (ScoreManager.Instance.Score > ScoreManager.Instance.NextLife)
-                {
-                    ScoreManager.Instance.Lives++;
-                    ScoreManager.Instance.NextLife *= 2;
-                    // TODO: Life up sound
-                }
-                BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
-                ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
-                LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);
+                UpdateUI();
                 break;
         }
+    }
+
+    private void UpdateUI()
+    {
+        if (ScoreManager.Instance.HitPoints >= 0)
+        {
+            HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
+        }
+        else
+        {
+            HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
+        }
+        if (ScoreManager.Instance.Score > ScoreManager.Instance.NextLife)
+        {
+            ScoreManager.Instance.Lives++;
+            ScoreManager.Instance.NextLife *= 2;
+            // TODO: Life up sound
+        }
+        BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
+        ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
+        LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);
     }
 
     private void FixedUpdate()
