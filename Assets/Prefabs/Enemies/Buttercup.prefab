@@ -131,6 +131,8 @@ MonoBehaviour:
   HitPoints: 3
   Facing: -1
   State: 0
+  gameController: {fileID: 0}
+  Active: 0
   AnimSpriteCount: 0
   AnimNextSpriteTime: 0
   AttackEndTime: 0
@@ -153,6 +155,14 @@ MonoBehaviour:
   HitStaggerSpeed: 2
   HangFrame: 0
   HangFrameChance: 0.8
+  ScoreValueHit: 100
+  ScoreValueKill: 500
+  PowerUps:
+  - {fileID: 1071465721965762, guid: 2b5fe42822a04404fb1cb78d31569490, type: 2}
+  - {fileID: 1563597056743444, guid: 3fabaa77cc19333479a95c4b8a4eda1c, type: 2}
+  SpawnChance:
+  - 0.2
+  - 0.5
   PlayerTransform: {fileID: 0}
   BulletSpawnPoint: {fileID: 4871099004859820}
   BulletPrefab: {fileID: 1285094699065280, guid: 7a3ad59322eaf624f971f030b4f99c69,

@@ -171,10 +171,12 @@ MonoBehaviour:
   HitStaggerSpeed: 2
   HangFrame: 0
   HangFrameChance: 0.5
+  ScoreValueHit: 100
+  ScoreValueKill: 100
   PowerUps:
-  - {fileID: 1834387024661898, guid: 23462bdbb13acbd468a5094d87170390, type: 2}
+  - {fileID: 1071465721965762, guid: 2b5fe42822a04404fb1cb78d31569490, type: 2}
   SpawnChance:
-  - 0.8
+  - 0.1
   TrackChance: 0.6
   PlayerTransform: {fileID: 0}
   AttackDistance: 32
