@@ -85,11 +85,11 @@ public class Sailor : BaseEnemy
             targetPosition += new Vector2(LeftBound - targetPosition.x, 0);
         } else if (targetPosition.x > RightBound)
         {
-            targetPosition -= new Vector2(RightBound - targetPosition.x, 0);
+            targetPosition += new Vector2(RightBound - targetPosition.x, 0);
         }
         if (targetPosition.y > UpperBound)
         {
-            targetPosition -= new Vector2(0, UpperBound - targetPosition.y);
+            targetPosition += new Vector2(0, UpperBound - targetPosition.y);
         } else if (targetPosition.y < LowerBound)
         {
             targetPosition += new Vector2(0, LowerBound - targetPosition.y);
