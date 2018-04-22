@@ -10,9 +10,17 @@ public enum GameState
 
 public class GameController : MonoBehaviour
 {
+    [Header("Debug tools")]
     public GameObject[] SpawnPrefabs;
-    public Transform Camera;
 
+    [Header("Resolution and Display")]
+    public Camera WorldCamera;
+    public int TargetX = 320;
+    public int TargetY = 200;
+    public Material RenderTexture;
+    private float pixelRatioAdjustment;
+
+    [Header("Scroll properties")]
     public int ScreenWidth = 320;
     public int CurrentPosition = 160;
     public int TargetPosition = 0;
@@ -24,6 +32,20 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        pixelRatioAdjustment = (float)TargetX / (float)TargetY;
+        if (pixelRatioAdjustment <= 1)
+        {
+            RenderTexture.mainTextureScale = new Vector2(pixelRatioAdjustment, 1);
+            RenderTexture.mainTextureOffset = new Vector2((1 - pixelRatioAdjustment) / 2, 0);
+            WorldCamera.orthographicSize = TargetY / 2;
+        }
+        else
+        {
+            pixelRatioAdjustment = 1f / pixelRatioAdjustment;
+            RenderTexture.mainTextureScale = new Vector2(1, pixelRatioAdjustment);
+            RenderTexture.mainTextureOffset = new Vector2(0, (1 - pixelRatioAdjustment) / 2);
+            WorldCamera.orthographicSize = TargetX / 2;
+        }
         ActivateEnemies();
     }
 
@@ -70,7 +92,7 @@ public class GameController : MonoBehaviour
         if (State == GameState.SCROLLING)
         {
             CurrentPosition += ScrollPerFrame;
-            Camera.position = new Vector3(CurrentPosition, Camera.position.y, Camera.position.z);
+            WorldCamera.transform.position = new Vector3(CurrentPosition, WorldCamera.transform.position.y, WorldCamera.transform.position.z);
             if (CurrentPosition == TargetPosition)
                 State = GameState.RUNNING;
         }
