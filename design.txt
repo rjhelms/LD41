@@ -68,11 +68,21 @@ other things:
 	level navigation
 	level graphics - backgrounds, foregrounds
 		- terrain scrolling implemented
+		- one foreground & background in place
 	other items on levels
 		- obstacles?
 		- platforms?
 			- these will both require a lot of reworking of collisions
 	level designs / loading
+		- procedurally generate instead
 	sound / music
 	title screen
 	level select
+	
+Level generation:
+	# of screens = level + 2
+	for each screen:
+		spawn baddies
+		spawn in right 2/3:
+			(ScreenNo * 296)+108 < x < (ScreenNo * 296)+296
+			8 < y < 96

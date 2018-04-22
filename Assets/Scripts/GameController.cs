@@ -49,6 +49,7 @@ public class GameController : MonoBehaviour
         }
         ActivateEnemies();
         backgrounds = GameObject.FindGameObjectsWithTag("Background");
+        GenerateLevel();
     }
 
     // Update is called once per frame
@@ -160,6 +161,32 @@ public class GameController : MonoBehaviour
             if (enemy.transform.position.x >= TargetPosition & enemy.transform.position.x <= TargetPosition + ScreenWidth)
             {
                 enemy.Active = true;
+            }
+        }
+    }
+
+    private void GenerateLevel()
+    {
+        int numScreens = ScoreManager.Instance.Level + 2;
+        int minY = 8;
+        int maxY = 97;
+        int maxBaddieIndex = numScreens + 1;
+        for (int curScreen = 0; curScreen < numScreens; curScreen++)
+        {
+            int minX = (curScreen * 296) + 108;
+            int maxX = minX + 189;
+            int numBaddies = curScreen + ScoreManager.Instance.Level + 1;
+            for (int curBaddie = 0; curBaddie < numBaddies; curBaddie++)
+            {
+                int xPos = Random.Range(minX, maxX);
+                int yPos = Random.Range(minY, maxY);
+                Vector3 position = new Vector3(xPos, yPos, yPos);
+                int baddieType = Random.Range(0, maxBaddieIndex);
+                GameObject newBaddie = Instantiate(SpawnPrefabs[baddieType], position, Quaternion.identity);
+                if (curScreen == 0)
+                {
+                    newBaddie.GetComponent<BaseEnemy>().Active = true;
+                }
             }
         }
     }

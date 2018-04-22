@@ -55,8 +55,8 @@ MonoBehaviour:
   - {fileID: 1024563196394224, guid: 39b421632e91f5b4bb5781bc3f60be6f, type: 2}
   - {fileID: 1245029590605312, guid: b9703c3c0c6b8284f8c65661eae755b9, type: 2}
   - {fileID: 1975975441671674, guid: 2d55226f81be4c145895908bea27eae9, type: 2}
-  - {fileID: 1790941208189882, guid: ce8c533c1ad4845469bcbe7a3478b3af, type: 2}
   - {fileID: 1832401043209632, guid: 33a44a50d34d6424b88504708d3957b8, type: 2}
+  - {fileID: 1790941208189882, guid: ce8c533c1ad4845469bcbe7a3478b3af, type: 2}
   WorldCamera: {fileID: 0}
   TargetX: 320
   TargetY: 200
