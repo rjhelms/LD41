@@ -65,8 +65,9 @@ other things:
 		* gameover implemented as pause - ie, have check for the condition
 	* balance - tweak jumping
 		* - increased power, added mario style invuln when falling
+	* balance - longer punch reach	
 	* two camera setup
-	level navigation
+	* level navigation
 	level graphics - backgrounds, foregrounds
 		- terrain scrolling implemented
 		- one foreground & background in place
@@ -76,9 +77,11 @@ other things:
 			- these will both require a lot of reworking of collisions
 	* level designs / loading 
 		* - procedurally generate instead
-	sound / music
+	sound effects
+	music
 	title screen
-	level select
+	level select - or just continue?
+	next balance pass
 	
 * Level generation:
 	* # of screens = level + 2
