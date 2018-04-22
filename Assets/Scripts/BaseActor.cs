@@ -13,35 +13,39 @@ public enum AnimState
 
 public abstract class BaseActor : MonoBehaviour
 {
+    #region Public variables
+    [Header("Sprites")]
     public Sprite IdleSprite;
     public Sprite[] WalkSprites;
     public Sprite[] AttackSprites;
     public Sprite JumpSprite;
-    public float WalkSpriteTime;
-    public float PunchSpriteTime = 1.0f;
 
+    [Header("State")]
+    public int HitPoints = 1;
     public int Facing = 1;
-    public float WalkSpeed = 1.0f;
     public AnimState State = AnimState.IDLE;
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
     public float AttackEndTime = 0;
-
-    public int LeftBound = 24;
-    public int RightBound = 296;
-    public int UpperBound = 96;
-    public int LowerBound = 8;
-
     public bool IsJumping = false;
     public float JumpStartSpeed = 10.0f;
     public float JumpCurrentSpeed = 10.0f;
     public bool JumpAccelFrame = false;
 
-    public int HitPoints = 1;
+    [Header("Movement")]
+    public float WalkSpriteTime;
+    public float AttackSpriteTime = 1.0f;
+    public float WalkSpeed = 1.0f;
+    public int LeftBound = 24;
+    public int RightBound = 296;
+    public int UpperBound = 96;
+    public int LowerBound = 8;
+    #endregion
 
-
+    #region Protected variables
     protected SpriteRenderer spriteRenderer;
     protected new Rigidbody2D rigidbody2D;
+    #endregion
 
     // Use this for initialization
     protected virtual void Start()
@@ -123,7 +127,7 @@ public abstract class BaseActor : MonoBehaviour
             case AnimState.ATTACK:
                 AnimSpriteCount = 0;
                 AnimNextSpriteTime = 0;
-                AttackEndTime = Time.time + PunchSpriteTime;
+                AttackEndTime = Time.time + AttackSpriteTime;
                 break;
             case AnimState.JUMP:
                 AnimSpriteCount = 0;

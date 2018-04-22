@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PlayerController : BaseActor {
 
+    #region Public variables
+    [Header("Colliders")]
+    public Collider2D PunchCollider;
+    public Collider2D JumpCollider;
+
+    [Header("Hit Stats")]
     public float HitInvulnTime = 0.5f;
     public float HitFlashTime = 0.1f;
 
     public bool IsInvulnerable;
+    #endregion
 
-    public Collider2D PunchCollider;
-    public Collider2D JumpCollider;
-
+    #region Private variables
     private float hitInvulnEnd;
     private float hitNextFlash;
+    #endregion
 
     // Update is called once per frame
     protected override void Update () {

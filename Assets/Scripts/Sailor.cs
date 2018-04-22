@@ -3,10 +3,12 @@ using System.Collections;
 
 public class Sailor : BaseEnemy
 {
+    #region public variables
+    [Header("Attack properites")]
     public float AttackDistance;
     public float AttackChance;
-    
     public Collider2D PunchCollider;
+    #endregion
 
     private void FixedUpdate()
     {

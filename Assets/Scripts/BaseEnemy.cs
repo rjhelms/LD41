@@ -3,25 +3,33 @@ using System.Collections;
 
 public class BaseEnemy : BaseActor
 {
+    #region Public variables
+    [Header("More sprites")]
     public Sprite HitSprite;
     public Sprite DeadSprite;
 
-    public Transform PlayerTransform;
-
-    public float TrackChance = 0.5f;
+    [Header("Hit Stats")]
     public float HitStaggerTime = 0.5f;
     public float DeadStaggerTime = 0.5f;
     public float DeadFlashTime = 0.1f;
 
     public float HitStaggerSpeed = 2.0f;
 
+    [Header("Collision Avoidance")]
+    public bool HangFrame = false;
+    public float HangFrameChance = 0.8f;
+
+    [Header("Player tracking")]
+    public float TrackChance = 0.5f;
+    public Transform PlayerTransform;
+    #endregion
+
+    #region Protected variables
     protected int hitDirection = 1;
     protected float hitStaggerEnd = 0f;
     protected float deadStaggerEnd = 0f;
     protected float deadFlashNext = 0f;
-
-    public bool HangFrame = false;
-    public float HangFrameChance = 0.8f;
+    #endregion
 
     protected override void Start()
     {
