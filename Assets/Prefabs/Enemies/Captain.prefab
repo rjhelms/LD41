@@ -153,7 +153,6 @@ MonoBehaviour:
   HitStaggerSpeed: 2
   HangFrame: 1
   HangFrameChance: 0
-  TargetXPos: 0
   PlayerTransform: {fileID: 0}
   BulletSpawnPoint: {fileID: 4133931160846794}
   BulletPrefab: {fileID: 1297001995653142, guid: 99945c7ba08a9c644a5aef78e3f5dd82,
@@ -163,6 +162,7 @@ MonoBehaviour:
   AttackPhaseTimes:
   - 0.2
   - 0.2
+  TargetXPos: 0
 --- !u!212 &212535122592473992
 SpriteRenderer:
   m_ObjectHideFlags: 1
