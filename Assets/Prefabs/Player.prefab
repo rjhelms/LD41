@@ -194,6 +194,8 @@ MonoBehaviour:
   HitPoints: 1
   Facing: 1
   State: 0
+  gameController: {fileID: 0}
+  Active: 1
   AnimSpriteCount: 0
   AnimNextSpriteTime: 0
   AttackEndTime: 0
@@ -204,14 +206,15 @@ MonoBehaviour:
   WalkSpriteTime: 0.15
   AttackSpriteTime: 0.12
   WalkSpeed: 2
-  LeftBound: 32
-  RightBound: 288
+  LeftBound: 24
+  RightBound: 296
   UpperBound: 96
   LowerBound: 8
   PunchCollider: {fileID: 70178021040795972}
   JumpCollider: {fileID: 68675863637098662}
   HitInvulnTime: 0.75
   HitFlashTime: 0.1
+  BombCoolDownTime: 1
   IsInvulnerable: 0
 --- !u!212 &212154899379454362
 SpriteRenderer:

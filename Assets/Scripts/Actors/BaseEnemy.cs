@@ -18,6 +18,12 @@ public class BaseEnemy : BaseActor
     [Header("Collision Avoidance")]
     public bool HangFrame = false;
     public float HangFrameChance = 0.8f;
+
+    [Header("PowerUps")]
+    public int ScoreValueHit = 100;
+    public int ScoreValueKill = 500;
+    public GameObject[] PowerUps;
+    public float[] SpawnChance;
     #endregion
 
     #region Protected variables
@@ -45,6 +51,18 @@ public class BaseEnemy : BaseActor
                     spriteRenderer.sprite = DeadSprite;
                     if (Time.time > deadStaggerEnd)
                     {
+                        if (PowerUps.Length > 0)
+                        {
+                            float PowerUpValue = Random.value;
+                            for (int i = 0; i < PowerUps.Length; i++)
+                            {
+                                if (PowerUpValue <= SpawnChance[i])
+                                {
+                                    Instantiate(PowerUps[i], transform.position, Quaternion.identity);
+                                    i = PowerUps.Length;
+                                }
+                            }
+                        }
                         Destroy(gameObject);
                     }
                     if (Time.time > deadFlashNext)
@@ -66,6 +84,7 @@ public class BaseEnemy : BaseActor
         hitDirection = direction;
         hitStaggerEnd = Time.time + HitStaggerTime;
         rigidbody2D.simulated = false;
+        ScoreManager.Instance.Score += ScoreValueHit;
     }
 
     protected override void EndHit()
@@ -77,6 +96,7 @@ public class BaseEnemy : BaseActor
         }
         else
         {
+            ScoreManager.Instance.Score += ScoreValueKill;
             ChangeAnimState(AnimState.DEAD);
             deadStaggerEnd = Time.time + DeadStaggerTime;
             deadFlashNext = Time.time + DeadFlashTime;

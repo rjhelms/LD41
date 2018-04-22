@@ -147,6 +147,8 @@ MonoBehaviour:
   HitPoints: 1
   Facing: -1
   State: 0
+  gameController: {fileID: 0}
+  Active: 0
   AnimSpriteCount: 0
   AnimNextSpriteTime: 0
   AttackEndTime: 0
@@ -169,6 +171,10 @@ MonoBehaviour:
   HitStaggerSpeed: 2
   HangFrame: 0
   HangFrameChance: 0.5
+  PowerUps:
+  - {fileID: 1834387024661898, guid: 23462bdbb13acbd468a5094d87170390, type: 2}
+  SpawnChance:
+  - 0.8
   TrackChance: 0.6
   PlayerTransform: {fileID: 0}
   AttackDistance: 32

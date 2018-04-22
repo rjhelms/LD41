@@ -12,6 +12,7 @@ public class PlayerController : BaseActor {
     [Header("Hit Stats")]
     public float HitInvulnTime = 0.5f;
     public float HitFlashTime = 0.1f;
+    public float BombCoolDownTime = 0.5f;
 
     public bool IsInvulnerable;
     #endregion
@@ -19,6 +20,7 @@ public class PlayerController : BaseActor {
     #region Private variables
     private float hitInvulnEnd;
     private float hitNextFlash;
+    private float nextBombCooldownTime = 0f;
     #endregion
 
     // Update is called once per frame
@@ -42,6 +44,13 @@ public class PlayerController : BaseActor {
                     DoJump();
                 }
             }
+            if (Input.GetButtonDown("Fire3"))
+            {
+                if (ScoreManager.Instance.Bombs > 0 & Time.time > nextBombCooldownTime)
+                {
+                    DoBomb();
+                }
+            }
             base.Update();
             if (IsInvulnerable)
             {
@@ -58,6 +67,7 @@ public class PlayerController : BaseActor {
 
     private void FixedUpdate()
     {
+        WalkSpeed = ScoreManager.Instance.WalkSpeed;
         if (Active & gameController.State == GameState.RUNNING)
         {
             AnimState newState = AnimState.IDLE;
@@ -151,6 +161,26 @@ public class PlayerController : BaseActor {
         IsJumping = true;
     }
 
+    private void DoBomb()
+    {
+        BaseEnemy[] enemies = FindObjectsOfType<BaseEnemy>();
+        foreach (BaseEnemy enemy in enemies)
+        {
+            if (enemy.Active & enemy.State < AnimState.HIT)
+            {
+                if (enemy.transform.position.x < transform.position.x)
+                {
+                    enemy.Hit(-1);
+                } else
+                {
+                    enemy.Hit(1);
+                }
+            }
+        }
+        ScoreManager.Instance.Bombs--;
+        nextBombCooldownTime = Time.time + BombCoolDownTime;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.tag == "Enemy")
@@ -163,15 +193,32 @@ public class PlayerController : BaseActor {
             {
                 Hit(Facing);
             }
-        }
-
-        if (collision.collider.gameObject.tag == "EnemyProjectile")
+        } else if (collision.collider.gameObject.tag == "EnemyProjectile")
         {
             if (collision.otherCollider != PunchCollider & collision.otherCollider != JumpCollider)
             {
                 Hit(Facing);
                 Destroy(collision.collider.gameObject);
             }
+        } if (collision.gameObject.tag == "PowerUp")
+        {
+            PowerUp powerUp = collision.gameObject.GetComponent<PowerUp>();
+            switch (powerUp.Type)
+            {
+                case PowerUpType.BOMB:
+                    ScoreManager.Instance.Bombs++;
+                    break;
+                case PowerUpType.HEALTH:
+                    if (ScoreManager.Instance.HitPoints < ScoreManager.Instance.MaxHitPoints)
+                        ScoreManager.Instance.HitPoints++;
+                    break;
+                case PowerUpType.SPEED:
+                    if (ScoreManager.Instance.WalkSpeed < ScoreManager.Instance.MaxWalkSpeed)
+                        ScoreManager.Instance.WalkSpeed++;
+                    break;
+            }
+            ScoreManager.Instance.Score += powerUp.ScoreValue;
+            Destroy(collision.gameObject);
         }
     }
 
@@ -180,7 +227,7 @@ public class PlayerController : BaseActor {
         if (!IsInvulnerable)
         {
             IsInvulnerable = true;
-            HitPoints--;
+            ScoreManager.Instance.HitPoints--;
             hitInvulnEnd = Time.time + HitInvulnTime;
             hitNextFlash = Time.time + HitFlashTime;
         }
