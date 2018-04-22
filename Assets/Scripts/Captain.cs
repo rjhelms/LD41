@@ -13,7 +13,8 @@ public class Captain : BaseEnemy
 {
     public float TargetXPos;
     public Transform PlayerTransform;
-
+    public Transform BulletSpawnPoint;
+    public GameObject BulletPrefab;
     public float FireChance = 0.05f;
     public AttackStep attackStep = AttackStep.DONE;
 
@@ -46,7 +47,9 @@ public class Captain : BaseEnemy
                         break;
                     case AttackStep.FIRE:
                         Debug.Log("BANG!");
-                        // fire the projectile here!
+                        GameObject projectileObject = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
+                        Projectile projectile = projectileObject.GetComponent<Projectile>();
+                        projectile.Velocity *= Facing;
                         nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
                         attackStep = AttackStep.COOLDOWN;
                         break;

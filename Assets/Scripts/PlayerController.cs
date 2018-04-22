@@ -155,6 +155,15 @@ public class PlayerController : BaseActor {
                 Hit(Facing);
             }
         }
+
+        if (collision.collider.gameObject.tag == "EnemyProjectile")
+        {
+            if (collision.otherCollider != PunchCollider & collision.otherCollider != JumpCollider)
+            {
+                Hit(Facing);
+                Destroy(collision.collider.gameObject);
+            }
+        }
     }
 
     public override void Hit(int direction)

@@ -83,21 +83,7 @@ public class Sailor : BaseEnemy
 
         return new Vector3(xTrack, yTrack, 0);
     }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            bool otherHangFrame = collision.gameObject.GetComponent<BaseEnemy>().HangFrame;
-
-            if (!otherHangFrame & Random.value < HangFrameChance)
-            {
-                HangFrame = true;
-                Debug.Log("Hanging back!");
-            }
-        }
-    }
-
+    
     private void DoAttack()
     {
         // logic for punching goes here
