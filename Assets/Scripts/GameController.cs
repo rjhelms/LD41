@@ -30,35 +30,34 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject toSpawn = null;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GameObject gameObject = Instantiate(SpawnPrefabs[0]);
-            gameObject.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            gameObject.GetComponent<BaseActor>().Active = true;
+            toSpawn = Instantiate(SpawnPrefabs[0]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            GameObject gameObject = Instantiate(SpawnPrefabs[1]);
-            gameObject.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            gameObject.GetComponent<BaseActor>().Active = true;
+            toSpawn = Instantiate(SpawnPrefabs[1]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            GameObject gameObject = Instantiate(SpawnPrefabs[2]);
-            gameObject.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            gameObject.GetComponent<BaseActor>().Active = true;
+            toSpawn = Instantiate(SpawnPrefabs[2]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            GameObject gameObject = Instantiate(SpawnPrefabs[3]);
-            gameObject.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            gameObject.GetComponent<BaseActor>().Active = true;
+            toSpawn = Instantiate(SpawnPrefabs[3]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            GameObject gameObject = Instantiate(SpawnPrefabs[4]);
-            gameObject.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-            gameObject.GetComponent<BaseActor>().Active = true;
+            toSpawn = Instantiate(SpawnPrefabs[4]);
+        }
+
+        if (toSpawn)
+        {
+            toSpawn.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
+            toSpawn.GetComponent<BaseActor>().Active = true;
+            toSpawn.GetComponent<BaseActor>().LeftBound += CurrentPosition - 160;
+            toSpawn.GetComponent<BaseActor>().RightBound += CurrentPosition - 160;
         }
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
