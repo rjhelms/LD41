@@ -22,42 +22,45 @@ public class Sailor : BaseEnemy
 
     private void FixedUpdate()
     {
-        Vector3 moveVector = Vector3.zero;
-        if (State < AnimState.HIT & HangFrame == false)
+        if (gameController.State == GameState.RUNNING)
         {
-            if (State < AnimState.ATTACK)
+            Vector3 moveVector = Vector3.zero;
+            if (State < AnimState.HIT & HangFrame == false)
             {
-                Vector2 distance = (Vector2)transform.position - (Vector2)PlayerTransform.position;
-                if (Mathf.Abs(distance.magnitude) < AttackDistance)
+                if (State < AnimState.ATTACK)
                 {
-                    if (Random.value < AttackChance)
-                        DoAttack();
+                    Vector2 distance = (Vector2)transform.position - (Vector2)PlayerTransform.position;
+                    if (Mathf.Abs(distance.magnitude) < AttackDistance)
+                    {
+                        if (Random.value < AttackChance)
+                            DoAttack();
+                    }
+                }
+
+                moveVector = TrackPlayer() * WalkSpeed;
+                if (moveVector.magnitude != 0)
+                {
+                    ChangeAnimState(AnimState.WALK);
+                    if (moveVector.x < 0)
+                    {
+                        Facing = -1;
+                    }
+                    else if (moveVector.x > 0)
+                    {
+                        Facing = 1;
+                    }
                 }
             }
 
-            moveVector = TrackPlayer() * WalkSpeed;
-            if (moveVector.magnitude != 0)
+            if (State == AnimState.HIT)
             {
-                ChangeAnimState(AnimState.WALK);
-                if (moveVector.x < 0)
-                {
-                    Facing = -1;
-                }
-                else if (moveVector.x > 0)
-                {
-                    Facing = 1;
-                }
+                Facing = -hitDirection;
+                moveVector = new Vector3(HitStaggerSpeed, 0, 0) * hitDirection;
             }
-        }
-        
-        if (State == AnimState.HIT)
-        {
-            Facing = -hitDirection;
-            moveVector = new Vector3(HitStaggerSpeed, 0, 0) * hitDirection;
-        }
 
-        transform.position += moveVector;
-        HangFrame = false;
+            transform.position += moveVector;
+            HangFrame = false;
+        }
     }
 
     private Vector3 TrackPlayer()

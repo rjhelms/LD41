@@ -30,32 +30,35 @@ public class ProjectileEnemy : BaseEnemy
     protected override void Update()
     {
         base.Update();
-        switch (State)
+        if (gameController.State == GameState.RUNNING)
         {
-            case AnimState.ATTACK:
-                switch (attackStep)
-                {
-                    case AttackStep.WARMUP:
-                        if (Time.time > nextAttackPhaseTime)
-                            attackStep = AttackStep.FIRE;
-                        break;
-                    case AttackStep.FIRE:
-                        Debug.Log("BANG!");
-                        GameObject projectileObject = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
-                        Projectile projectile = projectileObject.GetComponent<Projectile>();
-                        projectile.Velocity *= Facing;
-                        nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
-                        attackStep = AttackStep.COOLDOWN;
-                        break;
-                    case AttackStep.COOLDOWN:
-                        if (Time.time > nextAttackPhaseTime)
-                            attackStep = AttackStep.DONE;
-                        break;
-                    case AttackStep.DONE:
-                        ChangeAnimState(AnimState.IDLE);
-                        break;
-                }
-                break;
+            switch (State)
+            {
+                case AnimState.ATTACK:
+                    switch (attackStep)
+                    {
+                        case AttackStep.WARMUP:
+                            if (Time.time > nextAttackPhaseTime)
+                                attackStep = AttackStep.FIRE;
+                            break;
+                        case AttackStep.FIRE:
+                            Debug.Log("BANG!");
+                            GameObject projectileObject = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
+                            Projectile projectile = projectileObject.GetComponent<Projectile>();
+                            projectile.Velocity *= Facing;
+                            nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
+                            attackStep = AttackStep.COOLDOWN;
+                            break;
+                        case AttackStep.COOLDOWN:
+                            if (Time.time > nextAttackPhaseTime)
+                                attackStep = AttackStep.DONE;
+                            break;
+                        case AttackStep.DONE:
+                            ChangeAnimState(AnimState.IDLE);
+                            break;
+                    }
+                    break;
+            }
         }
     }
 

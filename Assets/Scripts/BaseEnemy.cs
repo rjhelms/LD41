@@ -31,26 +31,30 @@ public class BaseEnemy : BaseActor
     protected override void Update()
     {
         base.Update();
-        switch (State)
-        {
-            case AnimState.HIT:
-                spriteRenderer.sprite = HitSprite;
-                if (Time.time > hitStaggerEnd)
-                    EndHit();
-                break;
-            case AnimState.DEAD:
-                spriteRenderer.sprite = DeadSprite;
-                if (Time.time > deadStaggerEnd)
-                {
-                    Destroy(gameObject);
-                }
-                if (Time.time > deadFlashNext)
-                {
-                    spriteRenderer.enabled = !spriteRenderer.enabled;
-                    deadFlashNext += DeadFlashTime;
-                }
-                break;
 
+        if (gameController.State == GameState.RUNNING)
+        {
+            switch (State)
+            {
+                case AnimState.HIT:
+                    spriteRenderer.sprite = HitSprite;
+                    if (Time.time > hitStaggerEnd)
+                        EndHit();
+                    break;
+                case AnimState.DEAD:
+                    spriteRenderer.sprite = DeadSprite;
+                    if (Time.time > deadStaggerEnd)
+                    {
+                        Destroy(gameObject);
+                    }
+                    if (Time.time > deadFlashNext)
+                    {
+                        spriteRenderer.enabled = !spriteRenderer.enabled;
+                        deadFlashNext += DeadFlashTime;
+                    }
+                    break;
+
+            }
         }
     }
 

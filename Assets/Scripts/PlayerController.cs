@@ -23,102 +23,108 @@ public class PlayerController : BaseActor {
 
     // Update is called once per frame
     protected override void Update () {
+        if (gameController.State == GameState.RUNNING)
+        {
+            // punch
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (State < AnimState.ATTACK)
+                {
+                    DoAttack();
+                }
+            }
 
-        // punch
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (State < AnimState.ATTACK)
+            // jump
+            if (Input.GetButtonDown("Fire2"))
             {
-                DoAttack();
+                if (State < AnimState.JUMP)
+                {
+                    DoJump();
+                }
             }
-        }
-
-        // jump
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if (State < AnimState.JUMP)
+            base.Update();
+            if (IsInvulnerable)
             {
-                DoJump();
+                if (Time.time > hitNextFlash)
+                {
+                    spriteRenderer.enabled = !spriteRenderer.enabled;
+                    hitNextFlash += HitFlashTime;
+                }
+                if (Time.time > hitInvulnEnd)
+                    EndHit();
             }
-        }
-        base.Update();
-        if (IsInvulnerable)
-        {
-            if (Time.time > hitNextFlash)
-            {
-                spriteRenderer.enabled = !spriteRenderer.enabled;
-                hitNextFlash += HitFlashTime;
-            }
-            if (Time.time > hitInvulnEnd)
-                EndHit();
         }
     }
 
     private void FixedUpdate()
     {
-        AnimState newState = AnimState.IDLE;
-        Vector3 moveVector = new Vector3(0, 0, 0);
-        if (Input.GetAxis("Horizontal") > 0)
+        if (gameController.State == GameState.RUNNING)
         {
-            if (transform.position.x < RightBound)
-                moveVector += new Vector3(1, 0, 0) * WalkSpeed;
-            newState = AnimState.WALK;
-            Facing = 1;
-        } else if (Input.GetAxis("Horizontal") < 0)
-        {
-            if (transform.position.x > LeftBound)
-                moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
-            else CheckRightBound();
-            newState = AnimState.WALK;
-            Facing = -1;
-        }
-        
-        // process jump frame
-        if (IsJumping)
-        {
-            moveVector += new Vector3(0, JumpCurrentSpeed, 0);
-            if (JumpAccelFrame)
+            AnimState newState = AnimState.IDLE;
+            Vector3 moveVector = new Vector3(0, 0, 0);
+            if (Input.GetAxis("Horizontal") > 0)
             {
-                JumpCurrentSpeed -= 1;
-                if (JumpCurrentSpeed < 0)
-                    JumpCollider.enabled = true;
+                if (transform.position.x < RightBound)
+                    moveVector += new Vector3(1, 0, 0) * WalkSpeed;
+                newState = AnimState.WALK;
+                Facing = 1;
             }
-            if (JumpCurrentSpeed < -JumpStartSpeed)
+            else if (Input.GetAxis("Horizontal") < 0)
             {
-                JumpCollider.enabled = false;
-                IsJumping = false;
+                if (transform.position.x > LeftBound)
+                    moveVector -= new Vector3(1, 0, 0) * WalkSpeed;
+                else CheckRightBound();
+                newState = AnimState.WALK;
+                Facing = -1;
             }
-            JumpAccelFrame = !JumpAccelFrame;
-        }
 
-
-        if (State != AnimState.JUMP) // can't move vert during jump
-        {
-            if (Input.GetAxis("Vertical") > 0)
+            // process jump frame
+            if (IsJumping)
             {
-                if (transform.position.y < UpperBound)
+                moveVector += new Vector3(0, JumpCurrentSpeed, 0);
+                if (JumpAccelFrame)
                 {
-                    moveVector += new Vector3(0, 1, 0) * WalkSpeed;
-                    newState = AnimState.WALK;
+                    JumpCurrentSpeed -= 1;
+                    if (JumpCurrentSpeed < 0)
+                        JumpCollider.enabled = true;
+                }
+                if (JumpCurrentSpeed < -JumpStartSpeed)
+                {
+                    JumpCollider.enabled = false;
+                    IsJumping = false;
+                }
+                JumpAccelFrame = !JumpAccelFrame;
+            }
+
+
+            if (State != AnimState.JUMP) // can't move vert during jump
+            {
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    if (transform.position.y < UpperBound)
+                    {
+                        moveVector += new Vector3(0, 1, 0) * WalkSpeed;
+                        newState = AnimState.WALK;
+                    }
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    if (transform.position.y > LowerBound)
+                    {
+                        moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
+                        newState = AnimState.WALK;
+                    }
                 }
             }
-            else if (Input.GetAxis("Vertical") < 0)
+
+            if (Time.time > AttackEndTime)
             {
-                if (transform.position.y > LowerBound)
-                {
-                    moveVector -= new Vector3(0, 1, 0) * WalkSpeed;
-                    newState = AnimState.WALK;
-                }
+                PunchCollider.enabled = false;
             }
-        }
 
-        if (Time.time > AttackEndTime)
-        {
-            PunchCollider.enabled = false;
+            ChangeAnimState(newState);
+            transform.position += moveVector;
         }
-
-        ChangeAnimState(newState);
-        transform.position += moveVector;
     }
 
     private void CheckRightBound()

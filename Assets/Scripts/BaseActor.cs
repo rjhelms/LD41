@@ -24,6 +24,7 @@ public abstract class BaseActor : MonoBehaviour
     public int HitPoints = 1;
     public int Facing = 1;
     public AnimState State = AnimState.IDLE;
+    public GameController gameController;
     public int AnimSpriteCount = 0;
     public float AnimNextSpriteTime = 0;
     public float AttackEndTime = 0;
@@ -52,46 +53,52 @@ public abstract class BaseActor : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        transform.localScale = new Vector3(Facing, 1, 0);
-
-        switch (State)
+        if (gameController.State == GameState.RUNNING)
         {
-            case AnimState.IDLE: // idle
-                spriteRenderer.sprite = IdleSprite;
-                break;
-            case AnimState.WALK: // walk
-                if (Time.time > AnimNextSpriteTime)
-                {
-                    AnimSpriteCount++;
-                    if (AnimSpriteCount >= WalkSprites.Length)
-                        AnimSpriteCount = 0;
-                    AnimNextSpriteTime += WalkSpriteTime;
-                }
-                spriteRenderer.sprite = WalkSprites[AnimSpriteCount];
-                break;
-            case AnimState.ATTACK: // punch
-                if (Facing == 1)
-                {
-                    spriteRenderer.sprite = AttackSprites[1];
-                } else
-                {
-                    spriteRenderer.sprite = AttackSprites[0];
-                }
-                break;
-            case AnimState.JUMP: // jump
-                spriteRenderer.sprite = JumpSprite;
-                break;
+            transform.localScale = new Vector3(Facing, 1, 0);
+
+            switch (State)
+            {
+                case AnimState.IDLE: // idle
+                    spriteRenderer.sprite = IdleSprite;
+                    break;
+                case AnimState.WALK: // walk
+                    if (Time.time > AnimNextSpriteTime)
+                    {
+                        AnimSpriteCount++;
+                        if (AnimSpriteCount >= WalkSprites.Length)
+                            AnimSpriteCount = 0;
+                        AnimNextSpriteTime += WalkSpriteTime;
+                    }
+                    spriteRenderer.sprite = WalkSprites[AnimSpriteCount];
+                    break;
+                case AnimState.ATTACK: // punch
+                    if (Facing == 1)
+                    {
+                        spriteRenderer.sprite = AttackSprites[1];
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = AttackSprites[0];
+                    }
+                    break;
+                case AnimState.JUMP: // jump
+                    spriteRenderer.sprite = JumpSprite;
+                    break;
+            }
+
+            if (State != AnimState.JUMP)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+            }
         }
 
-        if (State != AnimState.JUMP)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
-        }
     }
 
     protected void ChangeAnimState(AnimState newState)

@@ -1,9 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GameState
+{
+    RUNNING,
+    SCROLLING,
+    PAUSED,
+}
+
 public class GameController : MonoBehaviour
 {
     public GameObject[] SpawnPrefabs;
+
+    public int ScreenWidth = 320;
+    public int CurrentPosition = 0;
+    public int ScrollAmount = 296;
+    public int ScrollPerFrame = 2;
+
+    public GameState State;
+
     // Use this for initialization
     void Start()
     {
@@ -29,5 +44,15 @@ public class GameController : MonoBehaviour
         {
             Instantiate(SpawnPrefabs[3]);
         }
+    }
+
+    public bool CanScroll()
+    {
+        return false;
+    }
+
+    public bool StartScroll()
+    {
+        return false;
     }
 }
