@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4483780818060980}
   - component: {fileID: 114689209844462120}
+  - component: {fileID: 82255985868133146}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -40,6 +41,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82255985868133146
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1959454107946638}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114689209844462120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,6 +156,15 @@ MonoBehaviour:
   CoverPanelBlack: {r: 0, g: 0, b: 0, a: 1}
   CoverPanelClear: {r: 0, g: 0, b: 0, a: 0}
   FadeTime: 1
+  PlayerHit: {fileID: 8300000, guid: 498c0c880d8615347bc6f1d38c98889e, type: 3}
+  EnemyHit: {fileID: 8300000, guid: 75b58ef694d965244aab095882ceae6f, type: 3}
+  PlayerBomb: {fileID: 8300000, guid: 29eea96d2f5ec0741943222b97ab2b83, type: 3}
+  PlayerJump: {fileID: 8300000, guid: ccfe4228a2588ca41a0747860291f54b, type: 3}
+  PlayerDead: {fileID: 8300000, guid: 955e19748134aa94da052ffb3dee6a61, type: 3}
+  PowerUp: {fileID: 8300000, guid: 0d42aade10142f94a9404901879bb2ff, type: 3}
+  LevelClear: {fileID: 8300000, guid: 737eaea5dcc02f249a6782eedc67c44d, type: 3}
+  GameOver: {fileID: 8300000, guid: 22c38efba93f9e146a43e4e74932ff74, type: 3}
+  Audio: {fileID: 82255985868133146}
   ScreenWidth: 320
   CurrentPosition: 160
   TargetPosition: 24

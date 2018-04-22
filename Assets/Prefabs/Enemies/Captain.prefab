@@ -128,6 +128,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f9047afe4b4b9684884537030aa2427a, type: 3}
   - {fileID: 21300002, guid: f9047afe4b4b9684884537030aa2427a, type: 3}
   JumpSprite: {fileID: 21300000, guid: 5f8f1d85da35dd34d92b651f643ac1f9, type: 3}
+  DeadSprite: {fileID: 21300000, guid: ebcf9e0e81af452459bec0cc093978ef, type: 3}
   HitPoints: 2
   Facing: -1
   State: 0
@@ -148,7 +149,6 @@ MonoBehaviour:
   UpperBound: 96
   LowerBound: 8
   HitSprite: {fileID: 21300000, guid: def11afdd9c1c5f41b2ecae7061ce421, type: 3}
-  DeadSprite: {fileID: 21300000, guid: ebcf9e0e81af452459bec0cc093978ef, type: 3}
   HitStaggerTime: 0.3
   DeadStaggerTime: 0.5
   DeadFlashTime: 0.1
@@ -171,9 +171,11 @@ MonoBehaviour:
     type: 2}
   FireChance: 0.005
   attackStep: 3
+  AttackShots: 1
   AttackPhaseTimes:
   - 0.2
   - 0.2
+  ProjectileSound: {fileID: 8300000, guid: 56bf1935cfc593e42ab6d98bdd52ef7e, type: 3}
   TargetXPos: 0
 --- !u!212 &212535122592473992
 SpriteRenderer:

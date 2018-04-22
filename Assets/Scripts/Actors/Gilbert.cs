@@ -10,6 +10,7 @@ public class Gilbert : BaseEnemy
     public float SpawnX;
     public int SpawnYMin = 8;
     public int SpawnYMax = 96;
+    public AudioClip ProjectileSound;
 
     private bool MoveUp;
 
@@ -96,7 +97,7 @@ public class Gilbert : BaseEnemy
 
     private void DoAttack()
     {
-        // TODO: play whistle
+        gameController.Audio.PlayOneShot(ProjectileSound);
         ChangeAnimState(AnimState.ATTACK);
         int SpawnIndex = Random.Range(0, SpawnEnemies.Length);
         int SpawnY = Random.Range(SpawnYMin, SpawnYMax);

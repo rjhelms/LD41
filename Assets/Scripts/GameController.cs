@@ -39,6 +39,17 @@ public class GameController : MonoBehaviour
     public Color CoverPanelClear;
     public float FadeTime;
 
+    [Header("Sounds")]
+    public AudioClip PlayerHit;
+    public AudioClip EnemyHit;
+    public AudioClip PlayerBomb;
+    public AudioClip PlayerJump;
+    public AudioClip PlayerDead;
+    public AudioClip PowerUp;
+    public AudioClip LevelClear;
+    public AudioClip GameOver;
+    public AudioSource Audio;
+
     [Header("Scroll properties")]
     public int ScreenWidth = 320;
     public int CurrentPosition = 160;
@@ -162,7 +173,7 @@ public class GameController : MonoBehaviour
                 {
                     ScoreManager.Instance.Lives++;
                     ScoreManager.Instance.NextLife *= 2;
-                    // TODO: Life up sound
+                    Audio.PlayOneShot(PowerUp);
                 }
                 UpdateUI();
                 break;
@@ -322,7 +333,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Level won!");
         State = GameState.WON;
         fadeTimeLeft = FadeTime;
-        // TODO: play level clear sound
+        Audio.PlayOneShot(LevelClear);
         ScoreManager.Instance.Level++;
 
     }
@@ -330,7 +341,7 @@ public class GameController : MonoBehaviour
     public void LoseLevel()
     {
         Debug.Log("Game over!");
-        // TODO: play game over sound
+        Audio.PlayOneShot(GameOver);
         State = GameState.LOST;
         fadeTimeLeft = FadeTime;
     }

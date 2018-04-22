@@ -1649,6 +1649,16 @@ Prefab:
       propertyPath: CoverPanel
       value: 
       objectReference: {fileID: 1277098577}
+    - target: {fileID: 114689209844462120, guid: 34e4659e0a131a5409125034110da366,
+        type: 2}
+      propertyPath: EnemyHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 498c0c880d8615347bc6f1d38c98889e, type: 3}
+    - target: {fileID: 114689209844462120, guid: 34e4659e0a131a5409125034110da366,
+        type: 2}
+      propertyPath: PlayerHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 75b58ef694d965244aab095882ceae6f, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34e4659e0a131a5409125034110da366, type: 2}
   m_IsPrefabParent: 0

@@ -142,6 +142,7 @@ MonoBehaviour:
   SpawnX: 602
   SpawnYMin: 8
   SpawnYMax: 96
+  ProjectileSound: {fileID: 8300000, guid: 6e30100187b4c3a47b29ba3326e2b3f3, type: 3}
 --- !u!212 &212841862516876808
 SpriteRenderer:
   m_ObjectHideFlags: 1

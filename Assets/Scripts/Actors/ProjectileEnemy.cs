@@ -19,6 +19,8 @@ public class ProjectileEnemy : BaseEnemy
     public int AttackShots = 1;
     public float[] AttackPhaseTimes;
 
+    public AudioClip ProjectileSound;
+
     protected float nextAttackPhaseTime;
     protected int currentShot = 0;
     protected override void Start()
@@ -78,6 +80,6 @@ public class ProjectileEnemy : BaseEnemy
         attackStep = AttackStep.WARMUP;
         nextAttackPhaseTime = Time.time + AttackPhaseTimes[0];
         ChangeAnimState(AnimState.ATTACK);
-        // TODO: Projectile fire sound
+        gameController.Audio.PlayOneShot(ProjectileSound);
     }
 }

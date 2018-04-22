@@ -83,7 +83,7 @@ public class BaseEnemy : BaseActor
 
     public override void Hit(int direction)
     {
-        // TODO: Enemy hit sound
+        gameController.Audio.PlayOneShot(gameController.PlayerHit);
         HitPoints--;
         ChangeAnimState(AnimState.HIT);
         hitDirection = direction;
@@ -105,7 +105,6 @@ public class BaseEnemy : BaseActor
             ChangeAnimState(AnimState.DEAD);
             deadStaggerEnd = Time.time + DeadStaggerTime;
             deadFlashNext = Time.time + DeadFlashTime;
-            // TODO: enemy dead sound
         }
     }
     

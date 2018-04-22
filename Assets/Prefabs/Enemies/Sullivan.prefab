@@ -169,6 +169,7 @@ MonoBehaviour:
   AttackPhaseTimes:
   - 0.1
   - 0.1
+  ProjectileSound: {fileID: 8300000, guid: 6e30100187b4c3a47b29ba3326e2b3f3, type: 3}
   TargetXPos: 0
   MoveUp: 0
 --- !u!212 &212071216018937884

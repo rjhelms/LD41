@@ -169,7 +169,6 @@ public class PlayerController : BaseActor {
         // logic for punching goes here
         PunchCollider.enabled = true;
         ChangeAnimState(AnimState.ATTACK);
-        // TODO: Player attack sound
     }
 
     private void DoJump()
@@ -178,7 +177,7 @@ public class PlayerController : BaseActor {
         JumpCurrentSpeed = JumpStartSpeed;
         JumpAccelFrame = false;
         IsJumping = true;
-        // TODO: Player jump sound
+        gameController.Audio.PlayOneShot(gameController.PlayerJump);
     }
 
     private void DoBomb()
@@ -199,7 +198,7 @@ public class PlayerController : BaseActor {
         }
         ScoreManager.Instance.Bombs--;
         nextBombCooldownTime = Time.time + BombCoolDownTime;
-        // TODO: Player bomb sound
+        gameController.Audio.PlayOneShot(gameController.PlayerBomb);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -226,9 +225,9 @@ public class PlayerController : BaseActor {
         } if (collision.gameObject.tag == "PowerUp")
         {
             PowerUp powerUp = collision.gameObject.GetComponent<PowerUp>();
+            gameController.Audio.PlayOneShot(gameController.PowerUp);
             switch (powerUp.Type)
             {
-                // TODO: powerup sound
                 case PowerUpType.BOMB:
                     ScoreManager.Instance.Bombs++;
                     break;
@@ -250,13 +249,13 @@ public class PlayerController : BaseActor {
     {
         if (!IsInvulnerable)
         {
+            gameController.Audio.PlayOneShot(gameController.EnemyHit);
             IsInvulnerable = true;
             ScoreManager.Instance.HitPoints--;
             if (ScoreManager.Instance.HitPoints == 0)
             {
                 Die();
             }
-            // TODO: player hit sound
             hitInvulnEnd = Time.time + HitInvulnTime;
             hitNextFlash = Time.time + HitFlashTime;
         }
@@ -277,7 +276,7 @@ public class PlayerController : BaseActor {
         if (ScoreManager.Instance.Lives >= 0)
         {
             ChangeAnimState(AnimState.DEAD);
-            // TODO: Player dead sound
+            gameController.Audio.PlayOneShot(gameController.PlayerDead);
         }
         else
         {
