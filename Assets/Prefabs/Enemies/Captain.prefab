@@ -128,7 +128,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f9047afe4b4b9684884537030aa2427a, type: 3}
   - {fileID: 21300002, guid: f9047afe4b4b9684884537030aa2427a, type: 3}
   JumpSprite: {fileID: 21300000, guid: 5f8f1d85da35dd34d92b651f643ac1f9, type: 3}
-  HitPoints: 3
+  HitPoints: 2
   Facing: -1
   State: 0
   gameController: {fileID: 0}
