@@ -30,31 +30,43 @@ enemies:
 	final boss: GILBERT and SULLIVAN
 	
 powerups:
-	rum - restore health
-	jump / speed improvements
-	bomb / projectile?
+	* rum - restore health
+	* jump / speed improvements
+	* bomb / projectile?
 	
 
 * player actions:
 	* walk - drawn, in movement controller
 	* jump - drawn, in movement controller 
 	* attack - drawn, in movement controller
+	* bomb - no anim required, in movement controller
 
 * scrolling behaviour:
-	check for active enemies - if any, prevent scrolling
+	* check for active enemies - if any, prevent scrolling
 	
-	game controller keeps state and current position
-		set to paused
-			destroy all projectiles
-			scroll screen 288px
-			update current position
-			activate enemies on screen
-		unpause
+	* game controller keeps state and current position
+		* set to paused
+			* destroy all projectiles
+			* scroll screen 288px
+			* update current position
+			* activate enemies on screen
+		* unpause
 
+balance score/powerups for enemies:
+	* sailor 1
+	* sailor 2
+	* sailor 3
+	* captain
+	* buttercup
+	
+	
 other things:		
 	player health / lives / gameover
+	balance - tweak jumping
+	* two camera setup
 	level navigation
 	level graphics - backgrounds, foregrounds
+		- terrain scrolling implemented
 	other items on levels
 		- obstacles?
 		- platforms?
