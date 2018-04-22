@@ -16,11 +16,11 @@ public class ProjectileEnemy : BaseEnemy
     public GameObject BulletPrefab;
     public float FireChance = 0.05f;
     public AttackStep attackStep = AttackStep.DONE;
-
+    public int AttackShots = 1;
     public float[] AttackPhaseTimes;
 
     protected float nextAttackPhaseTime;
-
+    protected int currentShot = 0;
     protected override void Start()
     {
         base.Start();
@@ -39,19 +39,30 @@ public class ProjectileEnemy : BaseEnemy
                     {
                         case AttackStep.WARMUP:
                             if (Time.time > nextAttackPhaseTime)
+                            {
                                 attackStep = AttackStep.FIRE;
+                                currentShot = 0;
+                            }
                             break;
                         case AttackStep.FIRE:
-                            Debug.Log("BANG!");
                             GameObject projectileObject = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
                             Projectile projectile = projectileObject.GetComponent<Projectile>();
                             projectile.Velocity *= Facing;
                             nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
                             attackStep = AttackStep.COOLDOWN;
+                            currentShot++;
                             break;
                         case AttackStep.COOLDOWN:
                             if (Time.time > nextAttackPhaseTime)
-                                attackStep = AttackStep.DONE;
+                            {
+                                if (currentShot == AttackShots)
+                                {
+                                    attackStep = AttackStep.DONE;
+                                } else
+                                {
+                                    attackStep = AttackStep.FIRE;
+                                }
+                            }
                             break;
                         case AttackStep.DONE:
                             ChangeAnimState(AnimState.IDLE);
