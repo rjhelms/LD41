@@ -98,7 +98,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
+        width: 48
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -110,9 +110,9 @@ TextureImporter:
       name: punch_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 0
-        width: 32
+        width: 48
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}

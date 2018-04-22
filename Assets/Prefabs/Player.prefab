@@ -152,8 +152,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 14, y: 34}
-  m_Size: {x: 8, y: 12}
+  m_Offset: {x: 18, y: 34}
+  m_Size: {x: 12, y: 12}
   m_Direction: 0
 --- !u!70 &70852949378685596
 CapsuleCollider2D:
@@ -217,7 +217,7 @@ MonoBehaviour:
   HitFlashTime: 0.1
   BombCoolDownTime: 1
   DeadStaggerTime: 0.75
-  DeadFlashTime: 0.1
+  DeadInvulnTime: 1
   IsInvulnerable: 0
 --- !u!212 &212154899379454362
 SpriteRenderer:
