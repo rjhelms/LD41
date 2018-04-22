@@ -67,6 +67,8 @@ MonoBehaviour:
   ScoreText: {fileID: 0}
   LivesImage: {fileID: 0}
   CoverPanel: {fileID: 0}
+  MusicPlayer: {fileID: 1451379487135636, guid: 3fbb897f1f82404478c8665855f1cc6a,
+    type: 2}
   CoverPanelBlack: {r: 0, g: 0, b: 0, a: 1}
   CoverPanelClear: {r: 0, g: 0, b: 0, a: 0}
   FadeTime: 1

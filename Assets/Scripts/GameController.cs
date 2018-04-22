@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public Text ScoreText;
     public Image LivesImage;
     public Image CoverPanel;
+    public GameObject MusicPlayer;
 
     public Color CoverPanelBlack;
     public Color CoverPanelClear;
@@ -45,6 +46,7 @@ public class GameController : MonoBehaviour
     public int ScrollPerFrame = 2;
     public int NumScreens;
     public int CurScreen;
+
 
     public GameState State;
 
@@ -75,6 +77,12 @@ public class GameController : MonoBehaviour
         CurScreen = 0;
         fadeTimeLeft = FadeTime;
         CoverPanel.color = CoverPanelBlack;
+        GameObject musicPlayer = GameObject.FindGameObjectWithTag("Music");
+        if (!musicPlayer)
+        {
+            musicPlayer = Instantiate(MusicPlayer);
+            DontDestroyOnLoad(musicPlayer);
+        }
     }
 
     // Update is called once per frame
