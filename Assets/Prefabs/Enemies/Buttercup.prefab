@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1832401043209632}
+  m_IsPrefabParent: 1
+--- !u!1 &1202827188181324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4871099004859820}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1832401043209632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4401556708533722}
+  - component: {fileID: 212243512335434006}
+  - component: {fileID: 70098379155132820}
+  - component: {fileID: 50274156065984982}
+  - component: {fileID: 114037220559999446}
+  m_Layer: 0
+  m_Name: Buttercup
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4401556708533722
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832401043209632}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 256, y: 8, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4871099004859820}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4871099004859820
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1202827188181324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8, y: 44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4401556708533722}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50274156065984982
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832401043209632}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &70098379155132820
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832401043209632}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2, y: 32}
+  m_Size: {x: 12, y: 48}
+  m_Direction: 0
+--- !u!114 &114037220559999446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832401043209632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37bc43a929708454fa61fce4be74e745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdleSprite: {fileID: 21300000, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  WalkSprites:
+  - {fileID: 21300000, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  - {fileID: 21300002, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  - {fileID: 21300004, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  - {fileID: 21300006, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  AttackSprites:
+  - {fileID: 21300000, guid: 42d814d6b5854ca418f099f6e87b0bdd, type: 3}
+  - {fileID: 21300002, guid: 42d814d6b5854ca418f099f6e87b0bdd, type: 3}
+  JumpSprite: {fileID: 21300000, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  HitPoints: 3
+  Facing: -1
+  State: 0
+  AnimSpriteCount: 0
+  AnimNextSpriteTime: 0
+  AttackEndTime: 0
+  IsJumping: 0
+  JumpStartSpeed: 10
+  JumpCurrentSpeed: 10
+  JumpAccelFrame: 0
+  WalkSpriteTime: 0.15
+  AttackSpriteTime: 0.12
+  WalkSpeed: 1
+  LeftBound: 24
+  RightBound: 296
+  UpperBound: 96
+  LowerBound: 8
+  HitSprite: {fileID: 21300000, guid: 63dbc11379a7b704bbc285f93cef734b, type: 3}
+  DeadSprite: {fileID: 21300000, guid: 02df937f507567141b3ce73ed88ae21d, type: 3}
+  HitStaggerTime: 0.3
+  DeadStaggerTime: 0.5
+  DeadFlashTime: 0.1
+  HitStaggerSpeed: 2
+  HangFrame: 0
+  HangFrameChance: 0.8
+  PlayerTransform: {fileID: 0}
+  BulletSpawnPoint: {fileID: 4871099004859820}
+  BulletPrefab: {fileID: 1285094699065280, guid: 7a3ad59322eaf624f971f030b4f99c69,
+    type: 2}
+  FireChance: 0.02
+  attackStep: 3
+  AttackPhaseTimes:
+  - 0.1
+  - 0.2
+--- !u!212 &212243512335434006
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832401043209632}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 7569ebe16f507f845899db2105ca0491, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 32, y: 64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
