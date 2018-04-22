@@ -206,13 +206,15 @@ public class PlayerController : BaseActor {
     {
         if (collision.collider.gameObject.tag == "Enemy")
         {
+            BaseActor enemy = collision.gameObject.GetComponent<BaseActor>();
             if (collision.otherCollider == PunchCollider | collision.otherCollider == JumpCollider)
             {
-                collision.gameObject.GetComponent<BaseActor>().Hit(Facing);
+                enemy.Hit(Facing);
             }
             else if (!IsJumping | JumpCurrentSpeed >= 0)
             {
-                Hit(Facing);
+                if (enemy.State != AnimState.HIT & enemy.State != AnimState.DEAD)
+                    Hit(Facing);
             }
         } else if (collision.collider.gameObject.tag == "EnemyProjectile")
         {
