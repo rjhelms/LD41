@@ -86,3 +86,8 @@ Level generation:
 		spawn in right 2/3:
 			(ScreenNo * 296)+108 < x < (ScreenNo * 296)+296
 			8 < y < 96
+		# of baddies = level# (1 indexed) + screen# (0 indexed) + 1
+		type of baddies = level# + 2
+			ie level 1 - all 3 sailors
+			level 2 - introduce buttercup
+			level 3 - introduce captain

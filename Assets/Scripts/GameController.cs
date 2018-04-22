@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
             RenderTexture.mainTextureOffset = new Vector2(0, (1 - pixelRatioAdjustment) / 2);
             WorldCamera.orthographicSize = TargetX / 2;
         }
-        ActivateEnemies();
+        ActivateEnemies(0);
         backgrounds = GameObject.FindGameObjectsWithTag("Background");
         GenerateLevel();
     }
@@ -145,7 +145,7 @@ public class GameController : MonoBehaviour
         {
             enemy.LeftBound += ScrollAmount;
             enemy.RightBound += ScrollAmount;
-            if (enemy.transform.position.x >= TargetPosition & enemy.transform.position.x <= TargetPosition + ScreenWidth)
+            if (enemy.transform.position.x >= TargetPosition - 160 & enemy.transform.position.x <= TargetPosition - 160 + ScreenWidth)
             {
                 enemy.Active = true;
             }
@@ -153,12 +153,12 @@ public class GameController : MonoBehaviour
         return true;
     }
 
-    private void ActivateEnemies()
+    private void ActivateEnemies(int leftPosition)
     {
         BaseEnemy[] enemies = FindObjectsOfType<BaseEnemy>();
         foreach (BaseEnemy enemy in enemies)
         {
-            if (enemy.transform.position.x >= TargetPosition & enemy.transform.position.x <= TargetPosition + ScreenWidth)
+            if (enemy.transform.position.x >= leftPosition & enemy.transform.position.x <= leftPosition + ScreenWidth)
             {
                 enemy.Active = true;
             }
@@ -170,18 +170,27 @@ public class GameController : MonoBehaviour
         int numScreens = ScoreManager.Instance.Level + 2;
         int minY = 8;
         int maxY = 97;
-        int maxBaddieIndex = numScreens + 1;
+        int maxBaddieIndex = numScreens;
         for (int curScreen = 0; curScreen < numScreens; curScreen++)
         {
-            int minX = (curScreen * 296) + 108;
-            int maxX = minX + 189;
+            int minX = (curScreen * 296) + 140;
+            int maxX = minX + 157;
             int numBaddies = curScreen + ScoreManager.Instance.Level + 1;
             for (int curBaddie = 0; curBaddie < numBaddies; curBaddie++)
             {
+                // go easy for the first two screens
+                int curMaxBaddieIndex = maxBaddieIndex;
+                if (curScreen == 0)
+                {
+                    curMaxBaddieIndex -= 2;
+                } else if (curScreen == 1)
+                {
+                    curMaxBaddieIndex -= 1;
+                }
                 int xPos = Random.Range(minX, maxX);
                 int yPos = Random.Range(minY, maxY);
                 Vector3 position = new Vector3(xPos, yPos, yPos);
-                int baddieType = Random.Range(0, maxBaddieIndex);
+                int baddieType = Random.Range(0, curMaxBaddieIndex);
                 GameObject newBaddie = Instantiate(SpawnPrefabs[baddieType], position, Quaternion.identity);
                 if (curScreen == 0)
                 {
