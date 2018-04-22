@@ -58,7 +58,12 @@ public class BaseEnemy : BaseActor
                             {
                                 if (PowerUpValue <= SpawnChance[i])
                                 {
-                                    Instantiate(PowerUps[i], transform.position, Quaternion.identity);
+                                    Vector3 spawnPosition = transform.position;
+                                    while (spawnPosition.x < (gameController.CurrentPosition - 144))
+                                    {
+                                        spawnPosition += new Vector3(8, 0, 0);
+                                    }
+                                    Instantiate(PowerUps[i], spawnPosition, Quaternion.identity);
                                     i = PowerUps.Length;
                                 }
                             }
