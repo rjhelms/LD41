@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using System.Collections;
 
 public enum GameState
@@ -76,7 +78,6 @@ public class GameController : MonoBehaviour
         {
             toSpawn = Instantiate(SpawnPrefabs[4]);
         }
-
         if (toSpawn)
         {
             toSpawn.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
@@ -87,6 +88,11 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             CanScroll();
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            ScoreManager.Instance.Level++;
+            SceneManager.LoadScene("main");
         }
     }
 
@@ -138,7 +144,7 @@ public class GameController : MonoBehaviour
 
         // calculate new position
         TargetPosition = CurrentPosition + ScrollAmount;
-
+        Debug.Log(string.Format("New screen bounds:. {0}, {1}", TargetPosition - 160, TargetPosition + 160));
         // activate new enemies
         BaseEnemy[] enemies = FindObjectsOfType<BaseEnemy>();
         foreach (BaseEnemy enemy in enemies)
@@ -173,8 +179,9 @@ public class GameController : MonoBehaviour
         int maxBaddieIndex = numScreens;
         for (int curScreen = 0; curScreen < numScreens; curScreen++)
         {
-            int minX = (curScreen * 296) + 140;
-            int maxX = minX + 157;
+            int minX = (curScreen * 268) + 160;
+            int maxX = (curScreen * 268) + 296;
+            Debug.Log(string.Format("Screen {0} bounds: {1} - {2}", curScreen, minX, maxX));
             int numBaddies = curScreen + ScoreManager.Instance.Level + 1;
             for (int curBaddie = 0; curBaddie < numBaddies; curBaddie++)
             {
