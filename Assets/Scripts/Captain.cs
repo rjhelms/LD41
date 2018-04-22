@@ -1,26 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum AttackStep
-{
-    WARMUP,
-    FIRE,
-    COOLDOWN,
-    DONE
-}
-
-public class Captain : BaseEnemy
+public class Captain : ProjectileEnemy
 {
     public float TargetXPos;
-    public Transform PlayerTransform;
-    public Transform BulletSpawnPoint;
-    public GameObject BulletPrefab;
-    public float FireChance = 0.05f;
-    public AttackStep attackStep = AttackStep.DONE;
 
-    public float[] AttackPhaseTimes;
-
-    private float nextAttackPhaseTime;
     private bool MoveUp;
 
     protected override void Start()
@@ -30,39 +14,6 @@ public class Captain : BaseEnemy
         MoveUp = false;
         if (Random.value < 0.5f)
             MoveUp = true;
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        switch (State)
-        {
-            case AnimState.ATTACK:
-                switch (attackStep)
-                {
-                    case AttackStep.WARMUP:
-                        if (Time.time > nextAttackPhaseTime)
-                            attackStep = AttackStep.FIRE;
-                        break;
-                    case AttackStep.FIRE:
-                        Debug.Log("BANG!");
-                        GameObject projectileObject = Instantiate(BulletPrefab, BulletSpawnPoint.position, Quaternion.identity);
-                        Projectile projectile = projectileObject.GetComponent<Projectile>();
-                        projectile.Velocity *= Facing;
-                        nextAttackPhaseTime = Time.time + AttackPhaseTimes[1];
-                        attackStep = AttackStep.COOLDOWN;
-                        break;
-                    case AttackStep.COOLDOWN:
-                        if (Time.time > nextAttackPhaseTime)
-                            attackStep = AttackStep.DONE;
-                        break;
-                    case AttackStep.DONE:
-                        ChangeAnimState(AnimState.IDLE);
-                        break;
-                }
-                break;
-        }
     }
 
     private void FixedUpdate()
@@ -130,10 +81,5 @@ public class Captain : BaseEnemy
         transform.position += moveVector;
     }
 
-    private void DoAttack()
-    {
-        attackStep = AttackStep.WARMUP;
-        nextAttackPhaseTime = Time.time + AttackPhaseTimes[0];
-        ChangeAnimState(AnimState.ATTACK);
-    }
+
 }
