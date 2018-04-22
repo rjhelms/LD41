@@ -196,10 +196,10 @@ public class GameController : MonoBehaviour
 
     private void GenerateLevel()
     {
-        int numScreens = ScoreManager.Instance.Level + 2;
+        int numScreens = ScoreManager.Instance.Level + 3;
         int minY = 8;
         int maxY = 97;
-        int maxBaddieIndex = numScreens;
+        int maxBaddieIndex = ScoreManager.Instance.Level + 2;
         for (int curScreen = 0; curScreen < numScreens; curScreen++)
         {
             int minX = (curScreen * 268) + 160;
