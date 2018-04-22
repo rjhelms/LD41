@@ -213,6 +213,10 @@ Prefab:
       propertyPath: m_Name
       value: background1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1266538460088072, guid: 175384cc1d524214fae43c30d863bd5f, type: 2}
+      propertyPath: m_TagString
+      value: Background
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 175384cc1d524214fae43c30d863bd5f, type: 2}
   m_IsPrefabParent: 0

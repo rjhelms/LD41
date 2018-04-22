@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
 
     public GameState State;
 
+    private GameObject[] backgrounds;
     // Use this for initialization
     void Start()
     {
@@ -47,6 +48,7 @@ public class GameController : MonoBehaviour
             WorldCamera.orthographicSize = TargetX / 2;
         }
         ActivateEnemies();
+        backgrounds = GameObject.FindGameObjectsWithTag("Background");
     }
 
     // Update is called once per frame
@@ -95,6 +97,10 @@ public class GameController : MonoBehaviour
             WorldCamera.transform.position = new Vector3(CurrentPosition, WorldCamera.transform.position.y, WorldCamera.transform.position.z);
             if (CurrentPosition == TargetPosition)
                 State = GameState.RUNNING;
+            foreach (GameObject background in backgrounds)
+            {
+                background.transform.position += new Vector3(1, 0, 0);
+            }
         }
     }
     public bool CanScroll()
