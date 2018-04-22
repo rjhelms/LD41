@@ -10,7 +10,18 @@ punk at the opera
 
 enemies:
 	sailors - 2 or 3 ranks
+		- just different numbers of hitpoints, I think!
+		- behaviour:
+			- approach player
+			- punch when close
 	captain
+		- has a handgun
+		- shoot process: stop for a moment, then fire
+		- behaviour:
+			- pace up and down vertically, facing player
+			- except when knocked off it's target x-pos - then return to it
+			
+
 	buttercup?
 	final boss: GILBERT and SULLIVAN
 	
