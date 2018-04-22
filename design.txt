@@ -21,8 +21,11 @@ enemies:
 			- pace up and down vertically, facing player
 			- except when knocked off it's target x-pos - then return to it
 			
-
-	buttercup?
+	buttercup
+		- slow moving, sings
+		- stops and shoots music notes
+		- ie similar to captain
+		
 	final boss: GILBERT and SULLIVAN
 	
 powerups:
@@ -33,3 +36,16 @@ player actions:
 	walk - drawn, in movement controller
 	jump - drawn, in movement controller 
 	attack - drawn, in movement controller
+
+scrolling behaviour:
+	check for active enemies - if any, prevent scrolling
+	
+	game controller keeps state and current position
+		set to paused
+			destroy all projectiles
+			scroll screen 288px
+			update current position
+			activate enemies on screen
+		unpause
+		
+	
