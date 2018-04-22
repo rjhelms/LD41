@@ -24,6 +24,10 @@ public class GameController : MonoBehaviour
 
     [Header("UI Elements")]
     public Image HealthImage;
+    public Text BombsText;
+    public Text LevelText;
+    public Text ScoreText;
+    public Image LivesImage;
 
     [Header("Scroll properties")]
     public int ScreenWidth = 320;
@@ -55,6 +59,7 @@ public class GameController : MonoBehaviour
         ActivateEnemies(0);
         backgrounds = GameObject.FindGameObjectsWithTag("Background");
         GenerateLevel();
+        LevelText.text = string.Format("LEVEL {0}", ScoreManager.Instance.Level);
     }
 
     // Update is called once per frame
@@ -100,7 +105,14 @@ public class GameController : MonoBehaviour
         if (ScoreManager.Instance.HitPoints >= 0)
         {
             HealthImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.HitPoints * 16, 16, 0);
+        } else
+        {
+            HealthImage.rectTransform.sizeDelta = new Vector3(0, 16, 0);
         }
+
+        BombsText.text = string.Format("BOMBS:{0,3}", ScoreManager.Instance.Bombs);
+        ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
+        LivesImage.rectTransform.sizeDelta = new Vector3(ScoreManager.Instance.Lives * 16, 16, 0);
     }
 
     private void FixedUpdate()
