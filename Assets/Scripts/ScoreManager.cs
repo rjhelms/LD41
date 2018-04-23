@@ -27,7 +27,7 @@ public class ScoreManager : Singleton<ScoreManager>
         Lives = 3;
         NextLife = 3500;
         HitPoints = 3;
-        MaxHitPoints = 3;
+        MaxHitPoints = 5;
         WalkSpeed = 2;
         MaxWalkSpeed = 4;
         Bombs = 0;
