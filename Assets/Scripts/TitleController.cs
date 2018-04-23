@@ -17,6 +17,7 @@ public class TitleController : MonoBehaviour
     public int TargetY = 200;
     public Material RenderTexture;
     public GameObject MusicPlayer;
+    public string NextScene;
     private float pixelRatioAdjustment;
 
     // Use this for initialization
@@ -66,7 +67,7 @@ public class TitleController : MonoBehaviour
                 CoverPanel.color = Color.Lerp(CoverPanelClear, CoverPanelBlack, (1 - (fadeTimeLeft / FadeTime)));
                 if (fadeTimeLeft <= 0)
                 {
-                    SceneManager.LoadScene("main");
+                    SceneManager.LoadScene(NextScene);
                 }
                 break;
             case GameState.RUNNING:
