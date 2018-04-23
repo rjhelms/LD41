@@ -129,9 +129,12 @@ public class GameController : MonoBehaviour
                 }
                 break;
             case GameState.LOST:
-                // TODO: game over state
                 fadeTimeLeft -= Time.deltaTime;
                 CoverPanel.color = Color.Lerp(CoverPanelClear, CoverPanelBlack, (1 - (fadeTimeLeft / FadeTime)));
+                if (fadeTimeLeft <= 0)
+                {
+                    SceneManager.LoadScene("lose");
+                }
                 break;
             case GameState.SCROLLING:
             case GameState.RUNNING:
