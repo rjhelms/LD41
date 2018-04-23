@@ -103,6 +103,10 @@ public class GameController : MonoBehaviour
         // TODO: remove debug code
         switch (State)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
             case GameState.STARTING:
                 fadeTimeLeft -= Time.deltaTime;
                 CoverPanel.color = Color.Lerp(CoverPanelBlack, CoverPanelClear, (1 - (fadeTimeLeft / FadeTime)));
@@ -138,43 +142,6 @@ public class GameController : MonoBehaviour
                 break;
             case GameState.SCROLLING:
             case GameState.RUNNING:
-                GameObject toSpawn = null;
-                if (Input.GetKeyDown(KeyCode.Alpha1))
-                {
-                    toSpawn = Instantiate(SpawnPrefabs[0]);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha2))
-                {
-                    toSpawn = Instantiate(SpawnPrefabs[1]);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha3))
-                {
-                    toSpawn = Instantiate(SpawnPrefabs[2]);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha4))
-                {
-                    toSpawn = Instantiate(SpawnPrefabs[3]);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha5))
-                {
-                    toSpawn = Instantiate(SpawnPrefabs[4]);
-                }
-                if (toSpawn)
-                {
-                    toSpawn.transform.position += new Vector3(CurrentPosition - 160, 0, 0);
-                    toSpawn.GetComponent<BaseActor>().Active = true;
-                    toSpawn.GetComponent<BaseActor>().LeftBound += CurrentPosition - 160;
-                    toSpawn.GetComponent<BaseActor>().RightBound += CurrentPosition - 160;
-                }
-                if (Input.GetKeyDown(KeyCode.BackQuote))
-                {
-                    CanScroll();
-                }
-                if (Input.GetKeyDown(KeyCode.KeypadPlus))
-                {
-                    ScoreManager.Instance.Level++;
-                    SceneManager.LoadScene("main");
-                }
                 if (ScoreManager.Instance.Score >= ScoreManager.Instance.NextLife)
                 {
                     ScoreManager.Instance.Lives++;

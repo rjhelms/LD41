@@ -50,6 +50,10 @@ public class WinController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         ScoreText.text = string.Format("{0}", ScoreManager.Instance.Score);
         switch (State)
         {
