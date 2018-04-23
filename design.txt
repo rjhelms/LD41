@@ -104,3 +104,9 @@ other things:
 			* ie level 1 - all 3 sailors
 			* level 2 - introduce buttercup
 			* level 3 - introduce captain
+			
+Find all "TODO", Subfolders, Find Results 1, Entire Solution, ""
+  C:\Users\rob\Documents\GitHub\LD41\Assets\Scripts\Actors\BaseEnemy.cs(108):            // TODO: enemy dead sound
+  C:\Users\rob\Documents\GitHub\LD41\Assets\Scripts\GameController.cs(325):        // TODO: play level clear sound
+  C:\Users\rob\Documents\GitHub\LD41\Assets\Scripts\GameController.cs(333):        // TODO: play game over sound
+  Matching lines: 16    Matching files: 6    Total files searched: 15			
