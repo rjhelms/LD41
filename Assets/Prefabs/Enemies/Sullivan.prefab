@@ -129,7 +129,7 @@ MonoBehaviour:
   - {fileID: 21300006, guid: 172c2fbb6a368694badb00b1fc99bdd4, type: 3}
   JumpSprite: {fileID: 21300000, guid: c8bda40c19da7bb49918a86bff662170, type: 3}
   DeadSprite: {fileID: 21300000, guid: a8251e9904ef86843ae6582443b0364e, type: 3}
-  HitPoints: 5
+  HitPoints: 7
   Facing: -1
   State: 0
   gameController: {fileID: 0}
