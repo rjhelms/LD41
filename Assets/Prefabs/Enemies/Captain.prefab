@@ -162,9 +162,9 @@ MonoBehaviour:
   - {fileID: 1563597056743444, guid: 3fabaa77cc19333479a95c4b8a4eda1c, type: 2}
   - {fileID: 1834387024661898, guid: 23462bdbb13acbd468a5094d87170390, type: 2}
   SpawnChance:
-  - 0.1
+  - 0.15
   - 0.25
-  - 0.27
+  - 0.35
   PlayerTransform: {fileID: 0}
   BulletSpawnPoint: {fileID: 4133931160846794}
   BulletPrefab: {fileID: 1297001995653142, guid: 99945c7ba08a9c644a5aef78e3f5dd82,

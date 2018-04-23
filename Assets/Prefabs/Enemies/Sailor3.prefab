@@ -144,6 +144,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 967c5d4e53db6704faeb54b36aa63f59, type: 3}
   - {fileID: 21300002, guid: 967c5d4e53db6704faeb54b36aa63f59, type: 3}
   JumpSprite: {fileID: 21300000, guid: 651a3bb3db5d0424794c6b3cd0adfbe5, type: 3}
+  DeadSprite: {fileID: 21300000, guid: 6dec8667a0f308743adbe4c45ab00e9e, type: 3}
   HitPoints: 3
   Facing: -1
   State: 0
@@ -164,7 +165,6 @@ MonoBehaviour:
   UpperBound: 96
   LowerBound: 8
   HitSprite: {fileID: 21300000, guid: 750f3fd27f298de4795ce76e3d5c5e4f, type: 3}
-  DeadSprite: {fileID: 21300000, guid: 6dec8667a0f308743adbe4c45ab00e9e, type: 3}
   HitStaggerTime: 0.2
   DeadStaggerTime: 0.5
   DeadFlashTime: 0.1
@@ -176,9 +176,11 @@ MonoBehaviour:
   PowerUps:
   - {fileID: 1071465721965762, guid: 2b5fe42822a04404fb1cb78d31569490, type: 2}
   - {fileID: 1834387024661898, guid: 23462bdbb13acbd468a5094d87170390, type: 2}
+  - {fileID: 1563597056743444, guid: 3fabaa77cc19333479a95c4b8a4eda1c, type: 2}
   SpawnChance:
-  - 0.15
-  - 0.16
+  - 0.18
+  - 0.2
+  - 0.22
   TrackChance: 0.8
   PlayerTransform: {fileID: 0}
   TrackRandomVector: {x: 0, y: 0}
