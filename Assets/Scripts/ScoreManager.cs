@@ -17,6 +17,12 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public void Reset()
     {
+        Continue();
+        Level = 1;
+    }
+
+    public void Continue()
+    {
         Score = 0;
         Lives = 3;
         NextLife = 2500;
@@ -24,7 +30,6 @@ public class ScoreManager : Singleton<ScoreManager>
         MaxHitPoints = 3;
         WalkSpeed = 2;
         MaxWalkSpeed = 4;
-        Level = 1;
         Bombs = 0;
     }
 }

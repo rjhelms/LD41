@@ -118,10 +118,8 @@ public class Sailor : BaseEnemy
     
     private void DoAttack()
     {
-        // logic for punching goes here
         PunchCollider.enabled = true;
         ChangeAnimState(AnimState.ATTACK);
-        // TODO: Enemy punch sound
     }
 
     private void GenerateTrackRandomness()

@@ -122,6 +122,9 @@ public class GameController : MonoBehaviour
                     if (ScoreManager.Instance.Level < 5)
                     {
                         SceneManager.LoadScene("main");
+                    } else
+                    {
+                        SceneManager.LoadScene("win");
                     }
                 }
                 break;
